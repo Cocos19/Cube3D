@@ -6,11 +6,11 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/23 13:59:07 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:29:46 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	quit_game(t_display *display)
 {

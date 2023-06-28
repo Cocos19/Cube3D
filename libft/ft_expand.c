@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:26:35 by mprofett          #+#    #+#             */
-/*   Updated: 2023/03/30 15:38:19 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:11:41 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_expand(char *str, char *start, char *cut, char *paste)
 	len = -1;
 	while (++len < ft_strlen(cut))
 		++old_str;
-	while (*old_str)
+	while (old_str && *old_str)
 		*(new_str++) = *(old_str++);
 	*new_str = '\0';
 	return (result);

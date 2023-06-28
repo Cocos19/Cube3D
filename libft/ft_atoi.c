@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 16:23:21 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/05 10:57:37 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:59:55 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_atoi(const char *str, int *n)
 			return (1);
 	}
 	if (*(str + i) && !(*(str + i) >= '0' && *(str + i) <= '9'))
-		return (1);
-	*n = (int)result;
+		return (2);
+	*n = (int)result * sign;
 	return (0);
 }

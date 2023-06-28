@@ -6,13 +6,15 @@
 #    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/06/23 13:59:05 by mprofett         ###   ########.fr        #
+#    Updated: 2023/06/28 15:30:21 by mprofett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 
-SRC			= image.c loop.c main.c memory_free.c
+SRC			= src/image.c src/loop.c src/main.c src/map/check.c \
+			src/map/info_parsing.c src/memory_free.c src/minimap.c \
+			src/map/read_map.c
 
 SRC_BONUS	=
 
