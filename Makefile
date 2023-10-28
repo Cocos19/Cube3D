@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
+#    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/06/28 15:30:21 by mprofett         ###   ########.fr        #
+#    Updated: 2023/10/28 19:17:14 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ RM			= rm -f
 
 C_FLAGS	= -Wall -Wextra -Werror
 
-MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
+#-lmlx
+MLX_FLAGS =  -framework OpenGL -framework AppKit
 
 %.o: %.c
 	$(CC) $(C_FLAGS) -c $< -o $@
