@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/28 15:31:32 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:55:00 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	is_a_valid_char(char c)
 	return (-1);
 }
 
-void	update_player_view(t_display *display, char c)
+void	update_player_view(t_display *display, char c, int i, int j)
 {
 	if ((c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		&& display->map->player->view_angle != (double)-1)
@@ -63,9 +63,11 @@ void	update_player_view(t_display *display, char c)
 	else if (c == 'S')
 		display->map->player->view_angle = 270;
 	else if (c == 'W')
-		display->map->player->view_angle = 0;
-	else if (c == 'E')
 		display->map->player->view_angle = 180;
+	else if (c == 'E')
+		display->map->player->view_angle = 0;
+	display->map->player->x = j + 0.5;
+	display->map->player->y = i + 0.5;
 }
 
 int	check_map_validity(t_display *display)
@@ -82,7 +84,10 @@ int	check_map_validity(t_display *display)
 		{
 			char_type = is_a_valid_char(display->map->tiles[i][j]);
 			if (char_type == 1)
-				update_player_view(display, display->map->tiles[i][j]);
+			{
+				update_player_view(display, display->map->tiles[i][j], i, j);
+				display->map->tiles[i][j] = '0';
+			}
 			else if (char_type < 0)
 				map_error_and_exit(display, "Invalid character on map");
 			if (!(check_if_tile_is_surrounded(display, i, j) == 0))

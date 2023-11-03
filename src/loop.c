@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/28 15:29:46 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:32:48 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ int	ft_mlx_hook(t_display *display)
 
 int	ft_loop_hook(t_display *display)
 {
-	int		color;
-
 	display->new_img = init_image(display);
-	encode_pixel_rgb(&color, 100, 100, 100);
-	render_background(display->new_img, display);
+	render_image(display->new_img, display);
 	mlx_clear_window(display->mlx, display->win);
 	if (display->old_img)
 	{

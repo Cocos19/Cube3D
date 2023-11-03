@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/28 15:32:49 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:32:41 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ t_img	*init_image(t_display *display)
 	return (result);
 }
 
-void	render_background(t_img *image, t_display *display)
+void	render_image(t_img *image, t_display *display)
 {
 	int	x;
 	int	y;
 
-	y = -1;
-	while (++y < SCREEN_HEIGHT)
+	x = -1;
+	while (++x < SCREEN_WIDTH)
 	{
-		x = -1;
-		while (++x < SCREEN_WIDTH)
+		y = -1;
+		while (++y < SCREEN_HEIGHT)
 		{
 			if (y < SCREEN_HEIGHT / 2)
 			{
@@ -59,8 +59,7 @@ void	render_background(t_img *image, t_display *display)
 					put_pixel_on_img(image, x, y,
 						display->map->mini_map_border_color);
 				else if (pixel_is_in_minimap(x, y) == 0)
-					put_pixel_on_img(image, x, y,
-						display->map->mini_map_floor_color);
+					put_pixel_on_minimap(image, display->map, &x, &y);
 				else
 					put_pixel_on_img(image, x, y,
 						display->map->celling_color);

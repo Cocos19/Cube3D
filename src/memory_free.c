@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:11 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/28 15:29:54 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/01 10:40:02 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	free_display(t_display *display)
 {
-	mlx_clear_window(display->mlx, display->win);
+	if (display->mlx && display->win)
+		mlx_clear_window(display->mlx, display->win);
 	if (display->win)
 		mlx_destroy_window(display->mlx, display->win);
 	if (display->mlx)
