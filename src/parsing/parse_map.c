@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:34:13 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/01 14:49:52 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:57:19 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-char	**get_map_content(t_display *display, char *next_line, int fd)
+char	**get_map_tiles(t_display *display, char *next_line, int fd)
 {
 	char	**tiles_values;
 	char	**temp_tab;
@@ -36,7 +36,7 @@ char	**get_map_content(t_display *display, char *next_line, int fd)
 	return (tiles_values);
 }
 
-int	is_map_info(t_display *display, char *map_line)
+int	is_map_texture_or_color(t_display *display, char *map_line)
 {
 	char	*str;
 
@@ -69,18 +69,18 @@ int	map_info_is_complete(t_display *display)
 	return (1);
 }
 
-char	*get_map_info(t_display *display, char *next_line, int fd)
+char	*get_map_textures_and_colors(t_display *display, char *next_line, int fd)
 {
 	int	info_type;
 
-	info_type = is_map_info(display, next_line);
+	info_type = is_map_texture_or_color(display, next_line);
 	while (!(info_type == -1) && !(info_type == MAP))
 	{
 		if (next_line)
 			free(next_line);
 		next_line = get_next_line(fd, 100);
 		if (next_line)
-			info_type = is_map_info(display, next_line);
+			info_type = is_map_texture_or_color(display, next_line);
 	}
 	if (!(map_info_is_complete(display) == 0))
 	{
@@ -94,7 +94,7 @@ char	*get_map_info(t_display *display, char *next_line, int fd)
 	return (next_line);
 }
 
-void	read_map(t_display *display, char *map_name)
+void	parse_map(t_display *display, char *map_name)
 {
 	int		fd;
 	char	*path;
@@ -113,8 +113,8 @@ void	read_map(t_display *display, char *map_name)
 	next_line = get_next_line(fd, 100);
 	if (!next_line)
 		map_error_and_exit(display, "Empty map file");
-	next_line = get_map_info(display, next_line, fd);
-	display->map->tiles = get_map_content(display, next_line, fd);
+	next_line = get_map_textures_and_colors(display, next_line, fd);
+	display->map->tiles = get_map_tiles(display, next_line, fd);
 	if (!display->map->tiles || !(check_map_validity(display) == 0))
 		map_error_and_exit(display, "empty map");
 	close(fd);

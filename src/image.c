@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/02 12:32:41 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:56:05 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ t_img	*init_image(t_display *display)
 		strerror_and_exit(display, "mlx_get_data_addr");
 	return (result);
 }
+
+/*
+
+*/
 
 void	render_image(t_img *image, t_display *display)
 {

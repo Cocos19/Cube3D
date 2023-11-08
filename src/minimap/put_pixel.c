@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:31:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/03 12:41:40 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:44:03 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ int	pixel_is_in_minimap_border(double x, double y)
 void	put_pixel_on_minimap(t_img *img, t_map *map, int *pixel_x, int *pixel_y)
 {
 	t_coord	pix_on_minimap;
-	t_coord	pix_relative_position;
 	t_coord	pix_index;
 
 	pix_on_minimap.x = MINIMAP_CENTER_X - *pixel_x;
 	pix_on_minimap.y = MINIMAP_CENTER_Y - *pixel_y;
-	pix_relative_position.x = map->player->x - (pix_on_minimap.x / 20);
-	pix_relative_position.y = map->player->y - (pix_on_minimap.y / 20);
-	pix_index.x = floor(pix_relative_position.x);
-	pix_index.y = floor(pix_relative_position.y);
+	pix_index.x = floor(map->player->x - (pix_on_minimap.x / MINIMAP_SCALE));
+	pix_index.y = floor(map->player->y - (pix_on_minimap.y / MINIMAP_SCALE));
 	if (pixel_is_player(pix_on_minimap.x, pix_on_minimap.y) == 0)
 		put_pixel_on_img(img, *pixel_x, *pixel_y, map->mini_map_player_color);
 	else if (pixel_is_out_of_map(map, (int)pix_index.x, (int)pix_index.y) == 0)

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:17:42 by mprofett          #+#    #+#             */
-/*   Updated: 2023/06/28 15:31:06 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:59:21 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*get_texture_info(t_display *display, char *str, int x, int y)
 		map_error_and_exit(display, "Wrong argument format");
 	result = mlx_xpm_file_to_image(display->mlx, path, &x, &y);
 	if (!result)
-		printf("no texture\n");
+		strerror_and_exit(display, "performing texture extraction");
 	free(path);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/03 10:58:39 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:49:16 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	init_map(t_display *display, char *map_name)
 	if (!display->map->player)
 		strerror_and_exit(display, "malloc player");
 	display->map->player->view_angle = -1;
-	display->map->player->view_field = 0;
 	display->map->no_texture = NULL;
 	display->map->so_texture = NULL;
 	display->map->we_texture = NULL;
@@ -40,11 +39,16 @@ void	init_map(t_display *display, char *map_name)
 	display->map->celling_color = -1;
 	display->map->floor_color = -1;
 	display->map->map_height = 0;
-	read_map(display, map_name);
+	parse_map(display, map_name);
 }
 
-void	init_display(t_display *display, char *map_name)
+t_display	*init_display(char *map_name)
 {
+	t_display	*display;
+
+	display = malloc(sizeof(t_display));
+	if (!display)
+		strerror_and_exit(display, "malloc display");
 	display->mlx = mlx_init();
 	if (!display->mlx)
 		strerror_and_exit(display, "mlx init");
@@ -52,12 +56,12 @@ void	init_display(t_display *display, char *map_name)
 		= mlx_new_window(display->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, map_name);
 	if (!display->win)
 		strerror_and_exit(display, "mlx_new_window");
-	init_map(display, map_name);
 	display->old_img = NULL;
 	display->new_img = NULL;
+	return (display);
 }
 
-void	check_arguments_validity(int argc, char **argv)
+void	check_if_arguments_are_valid(int argc, char **argv)
 {
 	if (argc != 2)
 	{
@@ -76,14 +80,26 @@ int	main(int argc, char **argv)
 {
 	t_display	*display;
 
-	check_arguments_validity(argc, argv);
-	display = malloc(sizeof(t_display));
-	if (!display)
-		strerror_and_exit(display, "malloc display");
-	init_display(display, argv[1]);
+	check_if_arguments_are_valid(argc, argv);
+	display = init_display(argv[1]);
+	init_map(display, argv[1]);
 	mlx_loop_hook (display->mlx, &ft_loop_hook, display);
 	mlx_key_hook (display->win, &ft_key_hook, display);
 	mlx_hook(display->win, 17, 0, &ft_mlx_hook, display);
 	mlx_loop(display->mlx);
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	t_coord	point;
+// 	double	angle;
+
+// 	point.x = -100;
+// 	point.y = -5;
+// 	angle = get_angle_between_player_and_pixel(&point);
+// 	printf("angle: %f\n", angle);
+// 	return (0);
+// }
+
+

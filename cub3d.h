@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/03 16:20:09 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:49:30 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,29 @@
 
 # define MINIMAP_CENTER_X 1795
 # define MINIMAP_CENTER_Y 125
+# define MINIMAP_SCALE 20
 # define PLAYER_RADIUS 5
 
 /*MATH*/
 
 # define PI 3.14159265
 
+/*PLAYER*/
+
+# define FOV PI / 2
+
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 }	t_coord;
+
+typedef struct s_next_vector
+{
+	double	x;
+	double	y;
+	char	next_intersection;
+}	t_next_coord;
 
 typedef struct s_img
 {
@@ -71,7 +83,6 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	view_angle;
-	double	view_field;
 }	t_player;
 
 typedef struct s_map
@@ -92,16 +103,6 @@ typedef struct s_map
 	char		**tiles;
 	t_player	*player;
 }	t_map;
-
-/*GRID RULES
-'0': empty space
-'1': wall
-'N': player start face north
-'S': player start face south
-'E': player start face east
-'W': player start face west
-' ': void
-*/
 
 typedef struct s_display_datas
 {
@@ -138,13 +139,14 @@ int		ft_key_hook(int key, t_display *display);
 
 /*MAP INIT*/
 
-void	read_map(t_display *display, char *map_name);
+void	parse_map(t_display *display, char *map_name);
 int		check_map_validity(t_display *display);
 int		update_map_info(t_display *display, char *str, int info);
 
 /*Minimap*/
 
 void	put_pixel_on_minimap(t_img *image, t_map *map, int *x, int *y);
+int		pixel_is_behind_wall(t_map *map, t_coord *pixel, double *angle);
 int		pixel_is_in_fov(t_map *map, t_coord *pixel);
 double	get_angle_between_player_and_pixel(t_coord *pixel);
 

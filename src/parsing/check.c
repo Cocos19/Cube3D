@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/03 10:55:00 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/08 13:36:31 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	update_player_view(t_display *display, char c, int i, int j)
 		&& display->map->player->view_angle != (double)-1)
 		map_error_and_exit(display, "More than one player on map");
 	else if (c == 'N')
-		display->map->player->view_angle = 90;
+		display->map->player->view_angle = PI / 2;
 	else if (c == 'S')
-		display->map->player->view_angle = 270;
+		display->map->player->view_angle = (3 * PI) / 2;
 	else if (c == 'W')
-		display->map->player->view_angle = 180;
-	else if (c == 'E')
 		display->map->player->view_angle = 0;
+	else if (c == 'E')
+		display->map->player->view_angle = PI;
 	display->map->player->x = j + 0.5;
 	display->map->player->y = i + 0.5;
 }

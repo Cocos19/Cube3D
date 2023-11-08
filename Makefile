@@ -6,7 +6,7 @@
 #    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/11/03 11:53:00 by mprofett         ###   ########.fr        #
+#    Updated: 2023/11/08 13:50:00 by mprofett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		= cub3D
 SRC			= src/image.c src/loop.c src/main.c src/parsing/check.c \
 			src/parsing/info_parsing.c src/minimap/fov.c src/memory_free.c \
 			src/minimap/pixel_is_behind_wall.c \
-			src/minimap/put_pixel.c src/parsing/read_map.c
+			src/minimap/put_pixel.c src/parsing/parse_map.c
 
 SRC_BONUS	=
 
