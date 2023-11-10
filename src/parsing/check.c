@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/08 13:36:31 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:37:07 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,50 @@ int	is_a_valid_char(char c)
 
 void	update_player_view(t_display *display, char c, int i, int j)
 {
+	display->map->player->direction = malloc(sizeof(t_vector));
+	if (!display->map->player->direction)
+		strerror_and_exit(display, "malloc on player direction");
+	display->map->player->plane = malloc(sizeof(t_vector));
+	if (!display->map->player->plane)
+		strerror_and_exit(display, "malloc on player plane");
+	display->map->player->position = malloc(sizeof(t_dot));
+	if (!display->map->player->position)
+		strerror_and_exit(display, "malloc on player position");
 	if ((c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		&& display->map->player->view_angle != (double)-1)
 		map_error_and_exit(display, "More than one player on map");
 	else if (c == 'N')
-		display->map->player->view_angle = PI / 2;
+	{
+		display->map->player->view_angle = PI / 2; //implementation with angle method
+		display->map->player->direction->x = -1; //implementation with vector method
+		display->map->player->direction->y = 0; //implementation with vector method
+	}
 	else if (c == 'S')
-		display->map->player->view_angle = (3 * PI) / 2;
+	{
+		display->map->player->view_angle = (3 * PI) / 2; //implementation with angle method
+			display->map->player->direction->x = 1; //implementation with vector method
+		display->map->player->direction->y = 0; //implementation with vector method
+	}
 	else if (c == 'W')
-		display->map->player->view_angle = 0;
+	{
+		display->map->player->view_angle = 0; //implementation with angle method
+		display->map->player->direction->x = 0; //implementation with vector method
+		display->map->player->direction->y = -1; //implementation with vector method
+	}
 	else if (c == 'E')
-		display->map->player->view_angle = PI;
-	display->map->player->x = j + 0.5;
-	display->map->player->y = i + 0.5;
+	{
+		display->map->player->view_angle = PI; //implementation with angle method
+		display->map->player->direction->x = -0.070737; //implementation with vector method
+		display->map->player->direction->y = 0.997495; //implementation with vector method
+	}
+	display->map->player->x = j + 0.5; //implementation with angle method
+	display->map->player->y = i + 0.5; //implementation with angle method
+	// display->map->player->position->x = j + 0.5; //implementation with vector method
+	// display->map->player->position->y = i + 0.5; //implementation with vector method
+	display->map->player->position->x = i + 0.5; //test
+	display->map->player->position->y = j + 0.5; //test
+	display->map->player->plane->x = 0; //implementation with vector method
+	display->map->player->plane->y = 0.66666666; //implementation with vector method
 }
 
 int	check_map_validity(t_display *display)

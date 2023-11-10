@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/08 13:49:30 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:02:52 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 
 # define MINIMAP_CENTER_X 1795
 # define MINIMAP_CENTER_Y 125
+# define MINIMAP_DIAMETER 250
 # define MINIMAP_SCALE 20
 # define PLAYER_RADIUS 5
 
@@ -52,22 +53,43 @@
 
 # define PI 3.14159265
 
+/*KEYS*/
+
+# define ESCAPE 53
+# define TURN_LEFT 0
+# define TURN_RIGHT 2
+
+
 /*PLAYER*/
 
-# define FOV PI / 2
+# define FOV 2 * atan(0.66/1.0) //implentation with angle method
+# define ROTATION_SPEED 0.1
+# define MOVE_SPEED 3.0
 
-typedef struct s_vector
+typedef struct s_coord
 {
 	double	x;
 	double	y;
 }	t_coord;
 
-typedef struct s_next_vector
+typedef struct s_next_coord
 {
 	double	x;
 	double	y;
 	char	next_intersection;
 }	t_next_coord;
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}	t_vector;
+
+typedef struct s_dot
+{
+	double	x;
+	double	y;
+}	t_dot;
 
 typedef struct s_img
 {
@@ -80,9 +102,12 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	double	x;
-	double	y;
-	double	view_angle;
+	double		x;
+	double		y;
+	double		view_angle;
+	t_dot		*position;
+	t_vector	*direction;
+	t_vector	*plane;
 }	t_player;
 
 typedef struct s_map

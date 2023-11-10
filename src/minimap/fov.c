@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:13:26 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/08 13:46:57 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:58:44 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	pixel_is_in_fov(t_map *map, t_coord *pixel)
 	angle = get_angle_between_player_and_pixel(pixel);
 	if (radian_is_in_fov_range(&map->player->view_angle, &angle) == 0)
 	{
-		// if (pixel_is_behind_wall(map, pixel, &angle))
+		// if (pixel_is_behind_wall(map, (int)pixel->x + 125, pixel))
 		// 	return (1);
 		// else
 			return (0);

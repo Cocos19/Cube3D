@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/07 16:56:05 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:02:35 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ t_img	*init_image(t_display *display)
 	return (result);
 }
 
-/*
-
-*/
-
-void	render_image(t_img *image, t_display *display)
+void	render_minimap(t_img *image, t_display *display)
 {
 	int	x;
 	int	y;
@@ -64,7 +60,30 @@ void	render_image(t_img *image, t_display *display)
 						display->map->mini_map_border_color);
 				else if (pixel_is_in_minimap(x, y) == 0)
 					put_pixel_on_minimap(image, display->map, &x, &y);
-				else
+			}
+		}
+	}
+}
+
+void	render_background(t_img *image, t_display *display)
+{
+	int	x;
+	int	y;
+
+	x = -1;
+	while (++x < SCREEN_WIDTH)
+	{
+		y = -1;
+		while (++y < SCREEN_HEIGHT)
+		{
+			if (y < SCREEN_HEIGHT / 2)
+			{
+				// if (pixel_is_in_minimap_border(x, y) == 0)
+				// 	put_pixel_on_img(image, x, y,
+				// 		display->map->mini_map_border_color);
+				// else if (pixel_is_in_minimap(x, y) == 0)
+				// 	put_pixel_on_minimap(image, display->map, &x, &y);
+				// else
 					put_pixel_on_img(image, x, y,
 						display->map->celling_color);
 			}
@@ -72,4 +91,99 @@ void	render_image(t_img *image, t_display *display)
 				put_pixel_on_img(image, x, y, display->map->floor_color);
 		}
 	}
+}
+
+void	raycast(t_map *map, int *x, t_img *img)
+{
+	double		cameraX;
+	double		perpendicular_wall_distance;
+	t_vector	ray_direction;
+	t_vector	side_distance;
+	t_vector	delta_distance;
+	t_dot		map_location;
+	int			stepX;
+	int			stepY;
+	int			hit;
+	int			side;
+
+	cameraX = 2 * *x / (double)(SCREEN_WIDTH) - 1;
+	ray_direction.x = map->player->direction->x + map->player->plane->x * cameraX;
+	ray_direction.y = map->player->direction->y + map->player->plane->y * cameraX;
+	map_location.x = (int)map->player->position->x;
+	map_location.y = (int)map->player->position->y;
+	hit = 0;
+	stepX = 0;
+	stepY = 0;
+	if (ray_direction.x == 0)
+		delta_distance.x = LONG_MAX;
+	else
+		delta_distance.x = sqrt(1 + pow(ray_direction.y, 2) / pow(ray_direction.x, 2));
+	if (ray_direction.y == 0)
+		delta_distance.y = LONG_MAX;
+	else
+		delta_distance.y = sqrt(1 + pow(ray_direction.x, 2) / pow(ray_direction.y, 2));
+	if (ray_direction.x < 0)
+	{
+		stepX = -1;
+		side_distance.x = (map->player->position->x - map_location.x) * delta_distance.x;
+	}
+	else
+	{
+		stepX = 1;
+		side_distance.x = (map_location.x + 1.0 - map->player->position->x) * delta_distance.x;
+	}
+	if (ray_direction.y < 0)
+	{
+		stepY = -1;
+		side_distance.y = (map->player->position->y - map_location.y) * delta_distance.y;
+	}
+	else
+	{
+		stepY = 1;
+		side_distance.y = (map_location.y + 1.0 - map->player->position->y) * delta_distance.y;
+	}
+	while(hit == 0)
+	{
+		if (side_distance.x < side_distance.y)
+		{
+			side_distance.x += delta_distance.x;
+			map_location.x += stepX;
+			side = 0;
+		}
+		else
+		{
+			side_distance.y += delta_distance.y;
+			map_location.y += stepY;
+			side = 1;
+		}
+		if (map->tiles[(int)map_location.x][(int)map_location.y] == '1')
+			hit = 1;
+	}
+	if(side == 0)
+		perpendicular_wall_distance = (side_distance.x - delta_distance.x);
+	else
+		perpendicular_wall_distance = (side_distance.y - delta_distance.y);
+	int lineHeight = (int)(SCREEN_HEIGHT / perpendicular_wall_distance);
+	int drawStart = -lineHeight / 2 + SCREEN_HEIGHT / 2;
+	if(drawStart < 0)
+		drawStart = 0;
+	int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
+	if(drawEnd >= SCREEN_HEIGHT)
+		drawEnd = SCREEN_HEIGHT - 1;
+	while (drawStart <= drawEnd)
+	{
+		put_pixel_on_img(img, *x, drawStart, map->mini_map_fov_color);
+		++drawStart;
+	}
+}
+
+void	render_image(t_img *image, t_display *display)
+{
+	int	x;
+
+	render_background(image, display);
+	x = -1;
+	while(++x < SCREEN_WIDTH)
+		raycast(display->map, &x, image);
+	render_minimap(image, display);
 }

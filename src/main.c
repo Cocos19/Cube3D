@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/08 13:49:16 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:07:30 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int argc, char **argv)
 	check_if_arguments_are_valid(argc, argv);
 	display = init_display(argv[1]);
 	init_map(display, argv[1]);
+	ft_print_str_array(display->map->tiles);
 	mlx_loop_hook (display->mlx, &ft_loop_hook, display);
 	mlx_key_hook (display->win, &ft_key_hook, display);
 	mlx_hook(display->win, 17, 0, &ft_mlx_hook, display);
@@ -90,15 +91,20 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// int	main(void)
+// int	main(int argc, char **argv)
 // {
 // 	t_coord	point;
 // 	double	angle;
+// 	t_display	*display;
 
-// 	point.x = -100;
-// 	point.y = -5;
+// 	check_if_arguments_are_valid(argc, argv);
+// 	display = init_display(argv[1]);
+// 	init_map(display, argv[1]);
+
+// 	point.x = 5.5;
+// 	point.y = 3.5;
 // 	angle = get_angle_between_player_and_pixel(&point);
-// 	printf("angle: %f\n", angle);
+// 	printf("result: %d\n", pixel_is_behind_wall(display->map, &point, &angle));
 // 	return (0);
 // }
 
