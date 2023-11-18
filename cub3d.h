@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/10 17:02:52 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:26:32 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define SCREEN_HEIGHT 1080
 # define TEXTURE_WIDTH 128
 # define TEXTURE_HEIGHT 128
+# define MOUSE_ORIGIN_X 960
+# define MOUSE_ORIGIN_Y 540
 
 /*MAP PARSING*/
 
@@ -53,31 +55,30 @@
 
 # define PI 3.14159265
 
-/*KEYS*/
+/*KEYS AND BUTTONS*/
 
 # define ESCAPE 53
 # define TURN_LEFT 0
 # define TURN_RIGHT 2
+# define MOVE_FORWARD 13
+# define MOVE_BACKWARD 1
+# define INTERACT 14
+# define RIGHT_CLICK 1
 
+/*HOOKS MASKS*/
+
+#define KEYPRESS 2
+#define KEYRELEASE 3
+#define BUTTONPRESS 4
+#define DESTROYNOTIFY 17
 
 /*PLAYER*/
 
-# define FOV 2 * atan(0.66/1.0) //implentation with angle method
+# define HALF_FOV 0.5759586532
+# define FOV 1.1519173063 //implentation with angle method value is in radian
 # define ROTATION_SPEED 0.1
-# define MOVE_SPEED 3.0
-
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-}	t_coord;
-
-typedef struct s_next_coord
-{
-	double	x;
-	double	y;
-	char	next_intersection;
-}	t_next_coord;
+# define MOVE_SPEED 0.1
+# define INTERACT_REACH 3
 
 typedef struct s_vector
 {
@@ -90,6 +91,22 @@ typedef struct s_dot
 	double	x;
 	double	y;
 }	t_dot;
+
+typedef struct s_dot_index
+{
+	int	x;
+	int	y;
+}	t_dot_index;
+
+typedef struct s_ray
+{
+	t_vector	direction;
+	t_vector	side_distance;
+	t_vector	delta_distance;
+	t_dot_index	origin;
+	int			step_x;
+	int			step_y;
+} t_ray;
 
 typedef struct s_img
 {
@@ -104,7 +121,9 @@ typedef struct s_player
 {
 	double		x;
 	double		y;
-	double		view_angle;
+	int			exist;
+	int			is_moving;
+	int			is_strafing;
 	t_dot		*position;
 	t_vector	*direction;
 	t_vector	*plane;
@@ -118,6 +137,7 @@ typedef struct s_map
 	int			mini_map_empty_color;
 	int			mini_map_player_color;
 	int			mini_map_fov_color;
+	int			mini_map_door_color;
 	int			celling_color;
 	int			floor_color;
 	int			map_height;
@@ -131,6 +151,8 @@ typedef struct s_map
 
 typedef struct s_display_datas
 {
+	int		mouse_x;
+	int		mouse_enabled;
 	void	*mlx;
 	void	*win;
 	t_map	*map;
@@ -161,18 +183,31 @@ t_img	*init_image(t_display *display);
 int		ft_mlx_hook(t_display *display);
 int		ft_loop_hook(t_display *display);
 int		ft_key_hook(int key, t_display *display);
+int		ft_key_press_hook(int key, t_display *display);
+int		ft_key_release_hook(int key, t_display *display);
+int		ft_mouse_hook(int key, int x, int y, t_display *display);
 
 /*MAP INIT*/
 
 void	parse_map(t_display *display, char *map_name);
 int		check_map_validity(t_display *display);
 int		update_map_info(t_display *display, char *str, int info);
+int		init_player_infos(t_display *display, char c, int i, int j);
 
 /*Minimap*/
 
-void	put_pixel_on_minimap(t_img *image, t_map *map, int *x, int *y);
-int		pixel_is_behind_wall(t_map *map, t_coord *pixel, double *angle);
-int		pixel_is_in_fov(t_map *map, t_coord *pixel);
-double	get_angle_between_player_and_pixel(t_coord *pixel);
+void	put_pixel_on_minimap(t_img *image, t_map *map, t_dot *pixel);
+int		pixel_is_in_fov(t_map *map, t_dot *pixel);
+int		minimap_raycast(t_map *map, t_dot	*pixel);
+
+/*Moves*/
+
+void	move_forward(t_display *display);
+void	move_backward(t_display *display);
+void	turn_right(t_display *display);
+void	turn_left(t_display *display);
+void	move_player(t_display *display);
+int		open_door(t_map *map);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/10 16:37:07 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/18 14:11:38 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,59 +46,11 @@ int	check_if_tile_is_surrounded(t_display *display, int i, int j)
 
 int	is_a_valid_char(char c)
 {
-	if (c == '0' || c == '1' || c == ' ')
+	if (c == '0' || c == '1' || c == ' ' || c == 'D')
 		return (0);
 	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
 	return (-1);
-}
-
-void	update_player_view(t_display *display, char c, int i, int j)
-{
-	display->map->player->direction = malloc(sizeof(t_vector));
-	if (!display->map->player->direction)
-		strerror_and_exit(display, "malloc on player direction");
-	display->map->player->plane = malloc(sizeof(t_vector));
-	if (!display->map->player->plane)
-		strerror_and_exit(display, "malloc on player plane");
-	display->map->player->position = malloc(sizeof(t_dot));
-	if (!display->map->player->position)
-		strerror_and_exit(display, "malloc on player position");
-	if ((c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		&& display->map->player->view_angle != (double)-1)
-		map_error_and_exit(display, "More than one player on map");
-	else if (c == 'N')
-	{
-		display->map->player->view_angle = PI / 2; //implementation with angle method
-		display->map->player->direction->x = -1; //implementation with vector method
-		display->map->player->direction->y = 0; //implementation with vector method
-	}
-	else if (c == 'S')
-	{
-		display->map->player->view_angle = (3 * PI) / 2; //implementation with angle method
-			display->map->player->direction->x = 1; //implementation with vector method
-		display->map->player->direction->y = 0; //implementation with vector method
-	}
-	else if (c == 'W')
-	{
-		display->map->player->view_angle = 0; //implementation with angle method
-		display->map->player->direction->x = 0; //implementation with vector method
-		display->map->player->direction->y = -1; //implementation with vector method
-	}
-	else if (c == 'E')
-	{
-		display->map->player->view_angle = PI; //implementation with angle method
-		display->map->player->direction->x = -0.070737; //implementation with vector method
-		display->map->player->direction->y = 0.997495; //implementation with vector method
-	}
-	display->map->player->x = j + 0.5; //implementation with angle method
-	display->map->player->y = i + 0.5; //implementation with angle method
-	// display->map->player->position->x = j + 0.5; //implementation with vector method
-	// display->map->player->position->y = i + 0.5; //implementation with vector method
-	display->map->player->position->x = i + 0.5; //test
-	display->map->player->position->y = j + 0.5; //test
-	display->map->player->plane->x = 0; //implementation with vector method
-	display->map->player->plane->y = 0.66666666; //implementation with vector method
 }
 
 int	check_map_validity(t_display *display)
@@ -116,7 +68,7 @@ int	check_map_validity(t_display *display)
 			char_type = is_a_valid_char(display->map->tiles[i][j]);
 			if (char_type == 1)
 			{
-				update_player_view(display, display->map->tiles[i][j], i, j);
+				init_player_infos(display, display->map->tiles[i][j], i, j);
 				display->map->tiles[i][j] = '0';
 			}
 			else if (char_type < 0)
@@ -125,7 +77,7 @@ int	check_map_validity(t_display *display)
 				map_error_and_exit(display, "Map not surrounded by walls");
 		}
 	}
-	if (display->map->player->view_angle == (double)-1)
+	if (display->map->player->exist == 0)
 		map_error_and_exit(display, "No player on map");
 	return (0);
 }

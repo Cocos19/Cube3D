@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/10 17:02:35 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/18 14:16:44 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,24 @@ t_img	*init_image(t_display *display)
 
 void	render_minimap(t_img *image, t_display *display)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	t_dot	pixel;
 
-	x = -1;
+	x = MINIMAP_CENTER_X - MINIMAP_DIAMETER / 2;
 	while (++x < SCREEN_WIDTH)
 	{
 		y = -1;
-		while (++y < SCREEN_HEIGHT)
+		while (++y < MINIMAP_DIAMETER)
 		{
-			if (y < SCREEN_HEIGHT / 2)
+			if (pixel_is_in_minimap_border(x, y) == 0)
+				put_pixel_on_img(image, x, y,
+					display->map->mini_map_border_color);
+			else if (pixel_is_in_minimap(x, y) == 0)
 			{
-				if (pixel_is_in_minimap_border(x, y) == 0)
-					put_pixel_on_img(image, x, y,
-						display->map->mini_map_border_color);
-				else if (pixel_is_in_minimap(x, y) == 0)
-					put_pixel_on_minimap(image, display->map, &x, &y);
+				pixel.x = x;
+				pixel.y = y;
+				put_pixel_on_minimap(image, display->map, &pixel);
 			}
 		}
 	}
@@ -78,12 +80,6 @@ void	render_background(t_img *image, t_display *display)
 		{
 			if (y < SCREEN_HEIGHT / 2)
 			{
-				// if (pixel_is_in_minimap_border(x, y) == 0)
-				// 	put_pixel_on_img(image, x, y,
-				// 		display->map->mini_map_border_color);
-				// else if (pixel_is_in_minimap(x, y) == 0)
-				// 	put_pixel_on_minimap(image, display->map, &x, &y);
-				// else
 					put_pixel_on_img(image, x, y,
 						display->map->celling_color);
 			}
@@ -100,7 +96,7 @@ void	raycast(t_map *map, int *x, t_img *img)
 	t_vector	ray_direction;
 	t_vector	side_distance;
 	t_vector	delta_distance;
-	t_dot		map_location;
+	t_dot_index	map_location;
 	int			stepX;
 	int			stepY;
 	int			hit;
@@ -115,13 +111,13 @@ void	raycast(t_map *map, int *x, t_img *img)
 	stepX = 0;
 	stepY = 0;
 	if (ray_direction.x == 0)
-		delta_distance.x = LONG_MAX;
+		delta_distance.x = 1e30;
 	else
-		delta_distance.x = sqrt(1 + pow(ray_direction.y, 2) / pow(ray_direction.x, 2));
+		delta_distance.x = fabs(1 / ray_direction.x);
 	if (ray_direction.y == 0)
-		delta_distance.y = LONG_MAX;
+		delta_distance.y = 1e30;
 	else
-		delta_distance.y = sqrt(1 + pow(ray_direction.x, 2) / pow(ray_direction.y, 2));
+		delta_distance.y = fabs(1 / ray_direction.y);
 	if (ray_direction.x < 0)
 	{
 		stepX = -1;
@@ -156,8 +152,10 @@ void	raycast(t_map *map, int *x, t_img *img)
 			map_location.y += stepY;
 			side = 1;
 		}
-		if (map->tiles[(int)map_location.x][(int)map_location.y] == '1')
+		if (map->tiles[map_location.x][map_location.y] == '1')
 			hit = 1;
+		else if (map->tiles[map_location.x][map_location.y] == 'D')
+			hit = 2;
 	}
 	if(side == 0)
 		perpendicular_wall_distance = (side_distance.x - delta_distance.x);
@@ -170,9 +168,12 @@ void	raycast(t_map *map, int *x, t_img *img)
 	int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
 	if(drawEnd >= SCREEN_HEIGHT)
 		drawEnd = SCREEN_HEIGHT - 1;
-	while (drawStart <= drawEnd)
+	while (drawStart < drawEnd)
 	{
-		put_pixel_on_img(img, *x, drawStart, map->mini_map_fov_color);
+		if (hit == 1)
+			put_pixel_on_img(img, *x, drawStart, map->mini_map_fov_color);
+		else
+			put_pixel_on_img(img, *x, drawStart, map->mini_map_door_color);
 		++drawStart;
 	}
 }

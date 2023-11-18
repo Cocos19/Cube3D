@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/10 15:07:30 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:35:07 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void	init_minimap_colors(t_map *map)
 	encode_pixel_rgb(&map->mini_map_empty_color, 110, 208, 186);
 	encode_pixel_rgb(&map->mini_map_player_color, 220, 110, 186);
 	encode_pixel_rgb(&map->mini_map_fov_color, 50, 110, 186);
+	encode_pixel_rgb(&map->mini_map_door_color, 80, 80, 186);
 }
+
+/*init_map will parse the file given in argument and setup all the variables needed by the game.
+In case of redundancy in map informations, lack of informations or no respect for the map instructions, init map will throw an error and exit the program
+The map data structures contain textures, tiles array and all the players informations needed by the raycasting algorythm*/
 
 void	init_map(t_display *display, char *map_name)
 {
@@ -31,7 +36,7 @@ void	init_map(t_display *display, char *map_name)
 	display->map->player = malloc(sizeof(t_player));
 	if (!display->map->player)
 		strerror_and_exit(display, "malloc player");
-	display->map->player->view_angle = -1;
+	display->map->player->exist = 0;
 	display->map->no_texture = NULL;
 	display->map->so_texture = NULL;
 	display->map->we_texture = NULL;
@@ -41,6 +46,14 @@ void	init_map(t_display *display, char *map_name)
 	display->map->map_height = 0;
 	parse_map(display, map_name);
 }
+
+/*init_display is the main data structure in the program, it contain:
+	- all data needed by the mlx function (mlx and win)
+	- link to 2 images. The rendering will alternatively push one image to the window while he other image is rendered (in ordrer to avoid lags)
+	- information on mouse directional control
+	- all the maps datas (tiles, textures, player informations,...)
+
+We need a super data structure like this because all the mlx hooks functions allow only on paramater to be passed to the hook functions*/
 
 t_display	*init_display(char *map_name)
 {
@@ -58,6 +71,8 @@ t_display	*init_display(char *map_name)
 		strerror_and_exit(display, "mlx_new_window");
 	display->old_img = NULL;
 	display->new_img = NULL;
+	display->mouse_x = MOUSE_ORIGIN_X;
+	display->mouse_enabled = 1;
 	return (display);
 }
 
@@ -83,29 +98,12 @@ int	main(int argc, char **argv)
 	check_if_arguments_are_valid(argc, argv);
 	display = init_display(argv[1]);
 	init_map(display, argv[1]);
-	ft_print_str_array(display->map->tiles);
 	mlx_loop_hook (display->mlx, &ft_loop_hook, display);
-	mlx_key_hook (display->win, &ft_key_hook, display);
-	mlx_hook(display->win, 17, 0, &ft_mlx_hook, display);
+	mlx_mouse_hide();
+	mlx_hook(display->win, BUTTONPRESS, 0, &ft_mouse_hook, display);
+	mlx_hook(display->win, KEYPRESS, 0, &ft_key_press_hook, display);
+	mlx_hook(display->win, KEYRELEASE, 0, &ft_key_release_hook, display);
+	mlx_hook(display->win, DESTROYNOTIFY, 0, &ft_mlx_hook, display);
 	mlx_loop(display->mlx);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_coord	point;
-// 	double	angle;
-// 	t_display	*display;
-
-// 	check_if_arguments_are_valid(argc, argv);
-// 	display = init_display(argv[1]);
-// 	init_map(display, argv[1]);
-
-// 	point.x = 5.5;
-// 	point.y = 3.5;
-// 	angle = get_angle_between_player_and_pixel(&point);
-// 	printf("result: %d\n", pixel_is_behind_wall(display->map, &point, &angle));
-// 	return (0);
-// }
-
-

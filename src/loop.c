@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/10 15:54:18 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:25:53 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,46 @@ void	quit_game(t_display *display)
 	exit (EXIT_SUCCESS);
 }
 
-int	ft_key_hook(int key, t_display *display)
+int	ft_key_press_hook(int key, t_display *display)
 {
-	double	oldDir;
-	double	oldPlaneX;
-
 	if (key == ESCAPE)
 		quit_game(display);
+	else if (key == MOVE_FORWARD)
+		display->map->player->is_moving = MOVE_FORWARD;
+	else if (key == MOVE_BACKWARD)
+		display->map->player->is_moving = MOVE_BACKWARD;
+	else if (key == TURN_RIGHT)
+		display->map->player->is_strafing = TURN_RIGHT;
+	else if (key == TURN_LEFT)
+		display->map->player->is_strafing = TURN_LEFT;
+	else if (key == INTERACT)
+		open_door(display->map);
+	return (0);
+}
+
+int	ft_key_release_hook(int key, t_display *display)
+{
+	if (key == ESCAPE)
+		quit_game(display);
+	else if (key == MOVE_FORWARD)
+	{
+		if (display->map->player->is_moving == MOVE_FORWARD)
+			display->map->player->is_moving = -1;
+	}
+	else if (key == MOVE_BACKWARD)
+	{
+		if (display->map->player->is_moving == MOVE_BACKWARD)
+			display->map->player->is_moving = -1;
+	}
 	else if (key == TURN_RIGHT)
 	{
-		oldDir = display->map->player->direction->x;
-		display->map->player->direction->x = display->map->player->direction->x * cos(-ROTATION_SPEED) - display->map->player->direction->y * sin(-ROTATION_SPEED);
-		display->map->player->direction->y = oldDir * sin(-ROTATION_SPEED) + display->map->player->direction->y * cos(-ROTATION_SPEED);
-		oldPlaneX = display->map->player->plane->x;
-		display->map->player->plane->x = display->map->player->plane->x * cos(-ROTATION_SPEED) - display->map->player->plane->y * sin(-ROTATION_SPEED);
-		display->map->player->plane->y = oldPlaneX * sin(-ROTATION_SPEED) + display->map->player->plane->y * cos(-ROTATION_SPEED);
+		if (display->map->player->is_strafing == TURN_RIGHT)
+			display->map->player->is_strafing = -1;
 	}
 	else if (key == TURN_LEFT)
 	{
-		oldDir = display->map->player->direction->x;
-		display->map->player->direction->x = display->map->player->direction->x * cos(ROTATION_SPEED) - display->map->player->direction->y * sin(ROTATION_SPEED);
-		display->map->player->direction->y = oldDir * sin(ROTATION_SPEED) + display->map->player->direction->y * cos(ROTATION_SPEED);
-		oldPlaneX = display->map->player->plane->x;
-		display->map->player->plane->x = display->map->player->plane->x * cos(ROTATION_SPEED) - display->map->player->plane->y * sin(ROTATION_SPEED);
-		display->map->player->plane->y = oldPlaneX * sin(ROTATION_SPEED) + display->map->player->plane->y * cos(ROTATION_SPEED);
+		if (display->map->player->is_strafing == TURN_LEFT)
+			display->map->player->is_strafing = -1;
 	}
 	return (0);
 }
@@ -53,9 +69,31 @@ int	ft_mlx_hook(t_display *display)
 	return (0);
 }
 
+int	ft_mouse_hook(int key, int x, int y, t_display *display)
+{
+	if (key == 1)
+	{
+		if (display->mouse_enabled == 0)
+		{
+			mlx_mouse_hide();
+			display->mouse_x = MOUSE_ORIGIN_X;
+			display->mouse_enabled = 1;
+		}
+		else
+		{
+		 	mlx_mouse_show();
+			display->mouse_enabled = 0;
+		}
+	}
+	(void) x;
+	(void) y;
+	return (0);
+}
+
 int	ft_loop_hook(t_display *display)
 {
 	display->new_img = init_image(display);
+	move_player(display);
 	render_image(display->new_img, display);
 	mlx_clear_window(display->mlx, display->win);
 	if (display->old_img)
