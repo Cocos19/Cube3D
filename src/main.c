@@ -6,21 +6,31 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:35:07 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:49:17 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	init_minimap_colors(t_map *map)
+void	init_minimap_colors_and_sprite(t_display *display)
 {
-	encode_pixel_rgb(&map->mini_map_border_color, 145, 85, 61);
-	encode_pixel_rgb(&map->mini_map_floor_color, 220, 208, 186);
-	encode_pixel_rgb(&map->mini_map_walls_color, 145, 85, 61);
-	encode_pixel_rgb(&map->mini_map_empty_color, 110, 208, 186);
-	encode_pixel_rgb(&map->mini_map_player_color, 220, 110, 186);
-	encode_pixel_rgb(&map->mini_map_fov_color, 50, 110, 186);
-	encode_pixel_rgb(&map->mini_map_door_color, 80, 80, 186);
+	int	x;
+	int	y;
+
+	x = SPRITE_WIDTH;
+	y = SPRITE_HEIGHT;
+	encode_pixel_rgb(&display->map->mini_map_border_color, 145, 85, 61);
+	encode_pixel_rgb(&display->map->mini_map_floor_color, 220, 208, 186);
+	encode_pixel_rgb(&display->map->mini_map_walls_color, 145, 85, 61);
+	encode_pixel_rgb(&display->map->mini_map_empty_color, 110, 208, 186);
+	encode_pixel_rgb(&display->map->mini_map_player_color, 220, 110, 186);
+	encode_pixel_rgb(&display->map->mini_map_fov_color, 50, 110, 186);
+	encode_pixel_rgb(&display->map->mini_map_door_color, 80, 80, 186);
+	encode_pixel_rgb(&display->map->mini_map_pillar_color, 120, 80, 156);
+	display->map->sprite_texture
+		= mlx_xpm_file_to_image(display->mlx, "./textures/pillar.xpm", &x, &y);
+	if (!display->map->sprite_texture)
+		strerror_and_exit(display, "performing texture extraction");
 }
 
 /*init_map will parse the file given in argument and setup all the variables needed by the game.
@@ -32,7 +42,7 @@ void	init_map(t_display *display, char *map_name)
 	display->map = malloc(sizeof(t_map));
 	if (!display->map)
 		strerror_and_exit(display, "malloc map");
-	init_minimap_colors(display->map);
+	init_minimap_colors_and_sprite(display);
 	display->map->player = malloc(sizeof(t_player));
 	if (!display->map->player)
 		strerror_and_exit(display, "malloc player");
@@ -41,6 +51,8 @@ void	init_map(t_display *display, char *map_name)
 	display->map->so_texture = NULL;
 	display->map->we_texture = NULL;
 	display->map->ea_texture = NULL;
+	display->map->sprites_lst = NULL;
+	display->map->nbr_sprites = 0;
 	display->map->celling_color = -1;
 	display->map->floor_color = -1;
 	display->map->map_height = 0;

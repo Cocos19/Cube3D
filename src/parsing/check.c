@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 14:11:38 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:00:03 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,24 @@ int	is_a_valid_char(char c)
 		return (0);
 	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
+	else if (c == 'P')
+		return (2);
 	return (-1);
+}
+
+void	save_sprite_position(t_display *display, int x, int y)
+{
+	t_sprite	*new;
+
+	new = malloc(sizeof(t_sprite));
+	if (!new)
+		strerror_and_exit(display, "malloc new sprite position");
+	new->x = x + 0.5;
+	new->y = y + 0.5;
+	new->dist = 0;
+	new->next = display->map->sprites_lst;
+	display->map->sprites_lst = new;
+	++display->map->nbr_sprites;
 }
 
 int	check_map_validity(t_display *display)
@@ -71,6 +88,8 @@ int	check_map_validity(t_display *display)
 				init_player_infos(display, display->map->tiles[i][j], i, j);
 				display->map->tiles[i][j] = '0';
 			}
+			else if (char_type == 2)
+				save_sprite_position(display, i, j);
 			else if (char_type < 0)
 				map_error_and_exit(display, "Invalid character on map");
 			if (!(check_if_tile_is_surrounded(display, i, j) == 0))

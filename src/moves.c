@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 12:31:28 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:45:01 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:36:03 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,50 @@ void	move_backward(t_display *display)
 		display->map->player->x
 			-= display->map->player->direction->y * MOVE_SPEED;
 	}
+}
+
+void	straf_left(t_display *display)
+{
+		if (display->map->tiles[(int)(display->map->player->position->x
+				- display->map->player->direction->y * MOVE_SPEED)]
+				[(int)display->map->player->position->y] == '0')
+		{
+			display->map->player->position->x
+				-= display->map->player->direction->y * MOVE_SPEED;
+			display->map->player->y
+				-= display->map->player->direction->y * MOVE_SPEED;
+		}
+		if (display->map->tiles[(int)display->map->player->position->x]
+			[(int)(display->map->player->position->y
+				+ display->map->player->direction->x * MOVE_SPEED)] == '0')
+		{
+			display->map->player->position->y
+				+= display->map->player->direction->x * MOVE_SPEED;
+			display->map->player->x
+				+= display->map->player->direction->x * MOVE_SPEED;
+		}
+}
+
+void	straf_right(t_display *display)
+{
+		if (display->map->tiles[(int)(display->map->player->position->x
+				+ display->map->player->direction->y * MOVE_SPEED)]
+				[(int)display->map->player->position->y] == '0')
+		{
+			display->map->player->position->x
+				+= display->map->player->direction->y * MOVE_SPEED;
+			display->map->player->y
+				+= display->map->player->direction->y * MOVE_SPEED;
+		}
+		if (display->map->tiles[(int)display->map->player->position->x]
+			[(int)(display->map->player->position->y
+				- display->map->player->direction->x * MOVE_SPEED)] == '0')
+		{
+			display->map->player->position->y
+				-= display->map->player->direction->x * MOVE_SPEED;
+			display->map->player->x
+				-= display->map->player->direction->x * MOVE_SPEED;
+		}
 }
 
 /*This functions perform a rotation of the direction and the plane vector on the players infos
@@ -114,11 +158,15 @@ void	move_player(t_display *display)
 		move_forward(display);
 	else if (display->map->player->is_moving == MOVE_BACKWARD)
 		move_backward(display);
-	if (display->map->player->is_strafing == TURN_RIGHT)
+	else if (display->map->player->is_strafing == STRAF_LEFT)
+		straf_left(display);
+	else if (display->map->player->is_strafing == STRAF_RIGHT)
+		straf_right(display);
+	if (display->map->player->is_turning == TURN_RIGHT)
 		turn_right(display);
-	else if (display->map->player->is_strafing == TURN_LEFT)
+	else if (display->map->player->is_turning == TURN_LEFT)
 		turn_left(display);
-	if (x > 0 && x < SCREEN_WIDTH && y > 0 && y < SCREEN_HEIGHT && display->map->player->is_strafing == -1 && display->mouse_enabled == 1)
+	if (x > 0 && x < SCREEN_WIDTH && y > 0 && y < SCREEN_HEIGHT && display->map->player->is_turning == -1 && display->mouse_enabled == 1)
 	{
 		if (MOUSE_ORIGIN_X - x > 0)
 		{

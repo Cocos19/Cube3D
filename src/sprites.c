@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 13:50:40 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 14:18:44 by mprofett         ###   ########.fr       */
+/*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
+/*   Updated: 2023/11/20 15:48:39 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cub3d.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new_elem)
+void	get_sprites_distance(t_map *map)
 {
-	if (lst)
+	t_sprite *temp;
+
+	temp = map->sprites_lst;
+	while(temp)
 	{
-		if (new_elem)
-		{
-			new_elem->next = *lst;
-			*lst = new_elem;
-		}
+		temp->dist = pow(map->player->position->x - temp->x, 2)
+			+ pow(map->player->position->y - temp->y, 2);
+		temp = temp->next;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/11/18 15:06:55 by mprofett         ###   ########.fr        #
+#    Updated: 2023/11/20 14:46:10 by mprofett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC			= src/image.c src/loop.c src/main.c src/parsing/check.c \
 			src/parsing/info_parsing.c src/minimap/fov.c src/memory_free.c \
 			src/parsing/init_player_infos.c src/minimap/raycasting.c \
 			src/minimap/put_pixel.c src/parsing/parse_map.c src/moves.c \
-			src/door.c src/mouse.c
+			src/door.c src/sprites.c
 
 SRC_BONUS	=
 

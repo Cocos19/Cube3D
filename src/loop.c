@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:25:53 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:01:29 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ int	ft_key_press_hook(int key, t_display *display)
 	else if (key == MOVE_BACKWARD)
 		display->map->player->is_moving = MOVE_BACKWARD;
 	else if (key == TURN_RIGHT)
-		display->map->player->is_strafing = TURN_RIGHT;
+		display->map->player->is_turning = TURN_RIGHT;
 	else if (key == TURN_LEFT)
-		display->map->player->is_strafing = TURN_LEFT;
+		display->map->player->is_turning = TURN_LEFT;
+	else if (key == STRAF_LEFT)
+		display->map->player->is_strafing = STRAF_LEFT;
+		else if (key == STRAF_RIGHT)
+		display->map->player->is_strafing = STRAF_RIGHT;
 	else if (key == INTERACT)
 		open_door(display->map);
 	return (0);
@@ -51,12 +55,22 @@ int	ft_key_release_hook(int key, t_display *display)
 	}
 	else if (key == TURN_RIGHT)
 	{
-		if (display->map->player->is_strafing == TURN_RIGHT)
-			display->map->player->is_strafing = -1;
+		if (display->map->player->is_turning == TURN_RIGHT)
+			display->map->player->is_turning = -1;
 	}
 	else if (key == TURN_LEFT)
 	{
-		if (display->map->player->is_strafing == TURN_LEFT)
+		if (display->map->player->is_turning == TURN_LEFT)
+			display->map->player->is_turning = -1;
+	}
+	else if (key == STRAF_LEFT)
+	{
+		if (display->map->player->is_strafing == STRAF_LEFT)
+			display->map->player->is_strafing = -1;
+	}
+	else if (key == STRAF_RIGHT)
+	{
+		if (display->map->player->is_strafing == STRAF_RIGHT)
 			display->map->player->is_strafing = -1;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:26:32 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:48:46 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define SCREEN_HEIGHT 1080
 # define TEXTURE_WIDTH 128
 # define TEXTURE_HEIGHT 128
+# define SPRITE_WIDTH 32
+# define SPRITE_HEIGHT 96
 # define MOUSE_ORIGIN_X 960
 # define MOUSE_ORIGIN_Y 540
 
@@ -58,10 +60,12 @@
 /*KEYS AND BUTTONS*/
 
 # define ESCAPE 53
-# define TURN_LEFT 0
-# define TURN_RIGHT 2
+# define TURN_LEFT 123
+# define TURN_RIGHT 124
 # define MOVE_FORWARD 13
 # define MOVE_BACKWARD 1
+# define STRAF_LEFT 0
+# define STRAF_RIGHT 2
 # define INTERACT 14
 # define RIGHT_CLICK 1
 
@@ -98,6 +102,14 @@ typedef struct s_dot_index
 	int	y;
 }	t_dot_index;
 
+typedef struct s_sprite
+{
+	double			x;
+	double			y;
+	double			dist;
+	struct s_sprite	*next;
+}	t_sprite;
+
 typedef struct s_ray
 {
 	t_vector	direction;
@@ -124,6 +136,7 @@ typedef struct s_player
 	int			exist;
 	int			is_moving;
 	int			is_strafing;
+	int			is_turning;
 	t_dot		*position;
 	t_vector	*direction;
 	t_vector	*plane;
@@ -138,13 +151,17 @@ typedef struct s_map
 	int			mini_map_player_color;
 	int			mini_map_fov_color;
 	int			mini_map_door_color;
+	int			mini_map_pillar_color;
 	int			celling_color;
 	int			floor_color;
 	int			map_height;
+	int			nbr_sprites;
+	t_sprite	*sprites_lst;
 	void		*no_texture;
 	void		*so_texture;
 	void		*we_texture;
 	void		*ea_texture;
+	void		*sprite_texture;
 	char		**tiles;
 	t_player	*player;
 }	t_map;

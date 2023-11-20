@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:18:58 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 12:30:54 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:14:01 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	init_player_infos(t_display *display, char c, int i, int j)
 	display->map->player->position->x = i + 0.5;
 	display->map->player->position->y = j + 0.5;
 	display->map->player->is_moving = -1;
+	display->map->player->is_turning = -1;
 	display->map->player->is_strafing = -1;
 	return (0);
 }

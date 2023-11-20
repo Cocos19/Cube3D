@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:31:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:49:25 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/20 11:38:24 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,6 @@ void	put_pixel_on_minimap(t_img *img, t_map *map, t_dot *pixel)
 		put_pixel_on_img(img, pixel->x, pixel->y, map->mini_map_walls_color);
 	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == 'D')
 		put_pixel_on_img(img, pixel->x, pixel->y, map->mini_map_door_color);
+	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == 'P')
+		put_pixel_on_img(img, pixel->x, pixel->y, map->mini_map_pillar_color);
 }
