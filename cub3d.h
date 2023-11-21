@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 15:48:46 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:01:01 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,15 @@ typedef struct s_sprite
 	double			x;
 	double			y;
 	double			dist;
+	double			x_relative;
+	double			y_relative;
+	int				width;
+	int				height;
+	int				screen_correction;
+	int				draw_x_start;
+	int				draw_x_end;
+	int				draw_y_start;
+	int				draw_y_end;
 	struct s_sprite	*next;
 }	t_sprite;
 
@@ -133,6 +142,7 @@ typedef struct s_player
 {
 	double		x;
 	double		y;
+	double		*walls_distance;
 	int			exist;
 	int			is_moving;
 	int			is_strafing;
@@ -156,7 +166,7 @@ typedef struct s_map
 	int			floor_color;
 	int			map_height;
 	int			nbr_sprites;
-	t_sprite	*sprites_lst;
+	t_sprite	**sprites_array;
 	void		*no_texture;
 	void		*so_texture;
 	void		*we_texture;
@@ -226,5 +236,10 @@ void	turn_left(t_display *display);
 void	move_player(t_display *display);
 int		open_door(t_map *map);
 
+/*Sprites*/
+
+t_sprite	**get_sprites_array(t_display *display, t_sprite *sprites_lst);
+void		sort_sprites_array(t_sprite **sprites_array, int first, int last);
+void		render_sprites(t_map *map, t_img *screen, t_img *texture);
 
 #endif

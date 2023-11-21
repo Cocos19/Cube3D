@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 14:16:44 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:02:02 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	render_background(t_img *image, t_display *display)
 void	raycast(t_map *map, int *x, t_img *img)
 {
 	double		cameraX;
-	double		perpendicular_wall_distance;
 	t_vector	ray_direction;
 	t_vector	side_distance;
 	t_vector	delta_distance;
@@ -158,10 +157,10 @@ void	raycast(t_map *map, int *x, t_img *img)
 			hit = 2;
 	}
 	if(side == 0)
-		perpendicular_wall_distance = (side_distance.x - delta_distance.x);
+		map->player->walls_distance[*x] = (side_distance.x - delta_distance.x);
 	else
-		perpendicular_wall_distance = (side_distance.y - delta_distance.y);
-	int lineHeight = (int)(SCREEN_HEIGHT / perpendicular_wall_distance);
+		map->player->walls_distance[*x] = (side_distance.y - delta_distance.y);
+	int lineHeight = (int)(SCREEN_HEIGHT / map->player->walls_distance[*x]);
 	int drawStart = -lineHeight / 2 + SCREEN_HEIGHT / 2;
 	if(drawStart < 0)
 		drawStart = 0;
@@ -186,5 +185,6 @@ void	render_image(t_img *image, t_display *display)
 	x = -1;
 	while(++x < SCREEN_WIDTH)
 		raycast(display->map, &x, image);
+	// render_sprites(display->map, image, display->map->sprite_texture);
 	render_minimap(image, display);
 }

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:18:58 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 13:14:01 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:51:43 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_direction_infos(t_player *player, char c)
 	}
 }
 
-int	init_player_infos(t_display *display, char c, int i, int j)
+void	malloc_player_datas_structures(t_display *display)
 {
 	display->map->player->direction = malloc(sizeof(t_vector));
 	if (!display->map->player->direction)
@@ -71,6 +71,15 @@ int	init_player_infos(t_display *display, char c, int i, int j)
 	display->map->player->position = malloc(sizeof(t_dot));
 	if (!display->map->player->position)
 		strerror_and_exit(display, "malloc on player position");
+	display->map->player->walls_distance
+		= malloc(sizeof(double) * SCREEN_WIDTH);
+	if (!display->map->player->walls_distance)
+		strerror_and_exit(display, "malloc on walls distance");
+}
+
+int	init_player_infos(t_display *display, char c, int i, int j)
+{
+	malloc_player_datas_structures(display);
 	display->map->player->position->x = -1;
 	if ((c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		&& display->map->player->exist != 0)
@@ -85,5 +94,6 @@ int	init_player_infos(t_display *display, char c, int i, int j)
 	display->map->player->is_moving = -1;
 	display->map->player->is_turning = -1;
 	display->map->player->is_strafing = -1;
+	display->map->tiles[i][j] = '0';
 	return (0);
 }

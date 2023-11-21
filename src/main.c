@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 15:49:17 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:08:29 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	init_map(t_display *display, char *map_name)
 	display->map->so_texture = NULL;
 	display->map->we_texture = NULL;
 	display->map->ea_texture = NULL;
-	display->map->sprites_lst = NULL;
 	display->map->nbr_sprites = 0;
 	display->map->celling_color = -1;
 	display->map->floor_color = -1;
