@@ -6,15 +6,15 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:17:42 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 11:13:39 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:17:17 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-void	*get_texture_info(t_display *display, char *str, int x, int y)
+t_img	*load_texture(t_display *display, char *str)
 {
-	void	*result;
+	t_img *result;
 	char	*path;
 	char	*start;
 	int		i;
@@ -30,9 +30,7 @@ void	*get_texture_info(t_display *display, char *str, int x, int y)
 	str = ft_skip_character(str, ' ');
 	if (str && !(*str == '\n' || *str == '\0'))
 		map_error_and_exit(display, "Wrong argument format");
-	result = mlx_xpm_file_to_image(display->mlx, path, &x, &y);
-	if (!result)
-		strerror_and_exit(display, "performing texture extraction");
+	result = init_texture_image(display, path);
 	free(path);
 	return (result);
 }
@@ -77,18 +75,14 @@ int	get_color_info(t_display *display, char *str)
 int	update_map_info(t_display *display, char *str, int info)
 {
 	str = ft_skip_character(str, ' ');
-	if (info == NO && !display->map->no_texture)
-		display->map->no_texture
-			= get_texture_info(display, str, TEXTURE_WIDTH, TEXTURE_HEIGHT);
-	else if (info == SO && !display->map->so_texture)
-		display->map->so_texture
-			= get_texture_info(display, str, TEXTURE_WIDTH, TEXTURE_HEIGHT);
-	else if (info == WE && !display->map->we_texture)
-		display->map->we_texture
-			= get_texture_info(display, str, TEXTURE_WIDTH, TEXTURE_HEIGHT);
-	else if (info == EA && !display->map->ea_texture)
-		display->map->ea_texture
-			= get_texture_info(display, str, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+	if (info == NO && !display->map->north_texture)
+			display->map->north_texture = load_texture(display, str);
+	else if (info == SO && !display->map->south_texture)
+		display->map->south_texture = load_texture(display, str);
+	else if (info == WE && !display->map->west_texture)
+		display->map->west_texture = load_texture(display, str);
+	else if (info == EA && !display->map->east_texture)
+		display->map->east_texture = load_texture(display, str);
 	else if (info == C && display->map->celling_color == -1)
 		display->map->celling_color = get_color_info(display, str);
 	else if (info == F && display->map->floor_color == -1)

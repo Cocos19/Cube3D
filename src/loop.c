@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/20 15:01:29 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:51:34 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ int	ft_mouse_hook(int key, int x, int y, t_display *display)
 
 int	ft_loop_hook(t_display *display)
 {
+	static int	i = 0;
+	void	*image_to_put;
+
 	display->new_img = init_image(display);
 	move_player(display);
 	render_image(display->new_img, display);
@@ -119,5 +122,12 @@ int	ft_loop_hook(t_display *display)
 		display->old_img = display->new_img;
 	mlx_put_image_to_window(display->mlx, display->win,
 		display->old_img->mlx_img, 0, 0);
+	if (i < 10)
+		image_to_put = display->map->gun_texture->mlx_img;
+	else
+		image_to_put = display->map->gun_texture2->mlx_img;
+	mlx_put_image_to_window(display->mlx, display->win, image_to_put, SCREEN_WIDTH / 2 - 768 / 2, SCREEN_HEIGHT - 768);
+	if (++i == 21)
+		i = 0;
 	return (0);
 }

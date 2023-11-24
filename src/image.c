@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/21 18:02:02 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:10:20 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,48 @@ void	put_pixel_on_img(t_img *image, int x, int y, int color)
 
 	pixel = image->addr + (y * image->line_len + x * (image->bpp / 8));
 	*(int *)pixel = color;
+}
+
+t_img	*init_texture_image(t_display *display, char *path)
+{
+	t_img	*result;
+	int		x;
+	int		y;
+
+	x = TEXTURE_WIDTH;
+	y = TEXTURE_HEIGHT;
+	result = malloc(sizeof(t_img));
+	if (!result)
+		strerror_and_exit(display, "malloc texture");
+	result->mlx_img = mlx_xpm_file_to_image(display->mlx, path, &x, &y);
+	if (!result->mlx_img)
+		strerror_and_exit(display, "texture_mlx_new_image");
+	result->addr = mlx_get_data_addr(result->mlx_img, &result->bpp,
+			&result->line_len, &result->endian);
+	if (!result->addr)
+		strerror_and_exit(display, "texture_mlx_get_data_addr");
+	return (result);
+}
+
+t_img	*init_gun_image(t_display *display, char *path)
+{
+	t_img	*result;
+	int		x;
+	int		y;
+
+	x = 768;
+	y = 768;
+	result = malloc(sizeof(t_img));
+	if (!result)
+		strerror_and_exit(display, "malloc texture");
+	result->mlx_img = mlx_xpm_file_to_image(display->mlx, path, &x, &y);
+	if (!result->mlx_img)
+		strerror_and_exit(display, "texture_mlx_new_image");
+	result->addr = mlx_get_data_addr(result->mlx_img, &result->bpp,
+			&result->line_len, &result->endian);
+	if (!result->addr)
+		strerror_and_exit(display, "texture_mlx_get_data_addr");
+	return (result);
 }
 
 t_img	*init_image(t_display *display)
@@ -157,22 +199,53 @@ void	raycast(t_map *map, int *x, t_img *img)
 			hit = 2;
 	}
 	if(side == 0)
-		map->player->walls_distance[*x] = (side_distance.x - delta_distance.x);
+		map->player->walls_perp_distance[*x] = (side_distance.x - delta_distance.x);
 	else
-		map->player->walls_distance[*x] = (side_distance.y - delta_distance.y);
-	int lineHeight = (int)(SCREEN_HEIGHT / map->player->walls_distance[*x]);
+		map->player->walls_perp_distance[*x] = (side_distance.y - delta_distance.y);
+
+	//
+
+	double	wall_x;
+	t_dot_index	texture_position;
+
+	if (side == 0)
+		wall_x = map->player->position->y + map->player->walls_perp_distance[*x] * ray_direction.y;
+	else
+		wall_x = map->player->position->x + map->player->walls_perp_distance[*x] * ray_direction.x;
+	wall_x -= floor((wall_x));
+	texture_position.x = (int)(wall_x * TEXTURE_WIDTH);
+	if ((side == 0 && ray_direction.x > 0) || (side == 1 && ray_direction.y < 0))
+		texture_position.x = TEXTURE_WIDTH - texture_position.x - 1;
+
+	//
+
+	int lineHeight = (int)(SCREEN_HEIGHT / map->player->walls_perp_distance[*x]);
 	int drawStart = -lineHeight / 2 + SCREEN_HEIGHT / 2;
 	if(drawStart < 0)
 		drawStart = 0;
 	int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
 	if(drawEnd >= SCREEN_HEIGHT)
 		drawEnd = SCREEN_HEIGHT - 1;
+	// while (drawStart < drawEnd)
+	// {
+	// 	if (hit == 1)
+	// 		put_pixel_on_img(img, *x, drawStart, map->mini_map_fov_color);
+	// 	else
+	// 		put_pixel_on_img(img, *x, drawStart, map->mini_map_door_color);
+	// 	++drawStart;
+	// }
+
+	double	step;
+	double	texture_dist;
+
+	step = 1.0 * TEXTURE_HEIGHT / lineHeight;
+	texture_dist = (drawStart - SCREEN_HEIGHT / 2 + lineHeight / 2) * step;
 	while (drawStart < drawEnd)
 	{
-		if (hit == 1)
-			put_pixel_on_img(img, *x, drawStart, map->mini_map_fov_color);
-		else
-			put_pixel_on_img(img, *x, drawStart, map->mini_map_door_color);
+		texture_position.y = (int)texture_dist;
+		texture_dist += step;
+		if ((*(int *)(map->north_texture->addr + (map->north_texture->line_len * texture_position.y + texture_position.x * (map->north_texture->bpp / 8))) & 0x00FFFFFF) != 0)
+			put_pixel_on_img(img, *x, drawStart, *(int *)(map->north_texture->addr + (map->north_texture->line_len * texture_position.y + texture_position.x * (map->north_texture->bpp / 8))));
 		++drawStart;
 	}
 }

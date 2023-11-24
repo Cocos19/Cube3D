@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:18:58 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/21 16:51:43 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:17:45 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	malloc_player_datas_structures(t_display *display)
 	display->map->player->position = malloc(sizeof(t_dot));
 	if (!display->map->player->position)
 		strerror_and_exit(display, "malloc on player position");
-	display->map->player->walls_distance
+	display->map->player->walls_perp_distance
 		= malloc(sizeof(double) * SCREEN_WIDTH);
-	if (!display->map->player->walls_distance)
+	if (!display->map->player->walls_perp_distance)
 		strerror_and_exit(display, "malloc on walls distance");
 }
 

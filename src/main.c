@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/21 17:08:29 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:59:07 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,15 @@ void	init_minimap_colors_and_sprite(t_display *display)
 	encode_pixel_rgb(&display->map->mini_map_fov_color, 50, 110, 186);
 	encode_pixel_rgb(&display->map->mini_map_door_color, 80, 80, 186);
 	encode_pixel_rgb(&display->map->mini_map_pillar_color, 120, 80, 156);
-	display->map->sprite_texture
+	display->map->sprite_texture = malloc(sizeof(t_img));
+	if (!display->map->sprite_texture)
+		strerror_and_exit(display, "malloc sprite");
+	display->map->sprite_texture->mlx_img
 		= mlx_xpm_file_to_image(display->mlx, "./textures/pillar.xpm", &x, &y);
+	display->map->sprite_texture->addr = mlx_get_data_addr(display->map->sprite_texture->mlx_img, &display->map->sprite_texture->bpp,
+			&display->map->sprite_texture->line_len, &display->map->sprite_texture->endian);
+	display->map->gun_texture = init_gun_image(display, "./textures/gun1.xpm");
+	display->map->gun_texture2 = init_gun_image(display, "./textures/gun2.xpm");
 	if (!display->map->sprite_texture)
 		strerror_and_exit(display, "performing texture extraction");
 }
@@ -47,10 +54,10 @@ void	init_map(t_display *display, char *map_name)
 	if (!display->map->player)
 		strerror_and_exit(display, "malloc player");
 	display->map->player->exist = 0;
-	display->map->no_texture = NULL;
-	display->map->so_texture = NULL;
-	display->map->we_texture = NULL;
-	display->map->ea_texture = NULL;
+	display->map->north_texture = NULL;
+	display->map->south_texture = NULL;
+	display->map->west_texture = NULL;
+	display->map->east_texture = NULL;
 	display->map->nbr_sprites = 0;
 	display->map->celling_color = -1;
 	display->map->floor_color = -1;

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:34:13 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/08 13:57:19 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:15:56 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	is_map_texture_or_color(t_display *display, char *map_line)
 
 int	map_info_is_complete(t_display *display)
 {
-	if (display->map->no_texture && display->map->so_texture
-		&& display->map->we_texture && display->map->ea_texture
+	if (display->map->north_texture && display->map->south_texture
+		&& display->map->west_texture && display->map->east_texture
 		&& display->map->celling_color != -1 && display->map->floor_color != -1)
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/21 18:01:01 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:28:26 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define SCREEN_HEIGHT 1080
 # define TEXTURE_WIDTH 128
 # define TEXTURE_HEIGHT 128
-# define SPRITE_WIDTH 32
-# define SPRITE_HEIGHT 96
+# define SPRITE_WIDTH 128
+# define SPRITE_HEIGHT 128
 # define MOUSE_ORIGIN_X 960
 # define MOUSE_ORIGIN_Y 540
 
@@ -78,8 +78,10 @@
 
 /*PLAYER*/
 
-# define HALF_FOV 0.5759586532
-# define FOV 1.1519173063 //implentation with angle method value is in radian
+// # define HALF_FOV 0.5759586532
+// # define FOV 1.1519173063 //implentation with angle method value is in radian
+# define HALF_FOV 0.69
+# define FOV 1.38
 # define ROTATION_SPEED 0.1
 # define MOVE_SPEED 0.1
 # define INTERACT_REACH 3
@@ -142,7 +144,7 @@ typedef struct s_player
 {
 	double		x;
 	double		y;
-	double		*walls_distance;
+	double		*walls_perp_distance;
 	int			exist;
 	int			is_moving;
 	int			is_strafing;
@@ -167,11 +169,13 @@ typedef struct s_map
 	int			map_height;
 	int			nbr_sprites;
 	t_sprite	**sprites_array;
-	void		*no_texture;
-	void		*so_texture;
-	void		*we_texture;
-	void		*ea_texture;
-	void		*sprite_texture;
+	t_img		*sprite_texture;
+	t_img		*north_texture;
+	t_img		*south_texture;
+	t_img		*west_texture;
+	t_img		*east_texture;
+	t_img		*gun_texture;
+	t_img		*gun_texture2;
 	char		**tiles;
 	t_player	*player;
 }	t_map;
@@ -203,6 +207,8 @@ void	render_image(t_img *image, t_display *display);
 int		pixel_is_in_minimap(double x, double y);
 int		pixel_is_in_minimap_border(double x, double y);
 void	put_pixel_on_img(t_img *image, int x, int y, int color);
+t_img	*init_gun_image(t_display *display, char *path);
+t_img	*init_texture_image(t_display *display, char *path);
 t_img	*init_image(t_display *display);
 
 /*LOOPS ANF HOOKS*/

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/21 18:02:10 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:05:12 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,25 +90,27 @@ void	sort_sprites_array(t_sprite **sprites_array, int first, int last)
 void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite)
 {
 	double	inverse_camera_matrix_determinant;
+	double	sprite_x;
+	double	sprite_y;
 
-	sprite->x_relative = sprite->x - player->position->x;
-	sprite->y_relative = sprite->y - player->position->y;
+	sprite_x = sprite->x - player->position->x;
+	sprite_y = sprite->y - player->position->y;
 	inverse_camera_matrix_determinant = 1.0
-		/ ((player->plane->x * player->direction->y)
-		- (player->plane->y * player->direction->x));
+		/ (player->plane->x * player->direction->y
+		- player->direction->x * player->plane->y);
 	sprite->x_relative = inverse_camera_matrix_determinant
-		* ((player->direction->y * sprite->x_relative)
-		- (player->direction->x * sprite->y_relative));
+		* (player->direction->y * sprite_x
+		- player->direction->x * sprite_y);
 	sprite->y_relative = inverse_camera_matrix_determinant
-		* ((-1 * player->plane->y * sprite->x_relative)
-		+ (player->plane->x * sprite->y_relative));
+		* (-1 * player->plane->y * sprite_x
+		+ player->plane->x * sprite_y);
 }
 
 void	get_sprite_drawing_infos(t_sprite *sprite)
 {
 	sprite->screen_correction = (int)((SCREEN_WIDTH / 2)
-		* (1 / sprite->x_relative / sprite->y_relative));
-	sprite->width = abs((int)(SCREEN_WIDTH / sprite->x_relative)); //check after in case of problem
+		* (1 + sprite->x_relative / sprite->y_relative));
+	sprite->width = abs((int)(SCREEN_HEIGHT / sprite->y_relative));
 	sprite->height = abs((int)(SCREEN_HEIGHT / sprite->y_relative));
 	sprite->draw_x_start = -1 * sprite->width / 2 + sprite->screen_correction;
 	if (sprite->draw_x_start < 0)
@@ -132,20 +134,34 @@ void	draw_sprite(t_map *map, t_img *screen, t_img *texture, t_sprite *sprite)
 	t_dot_index	texture_position;
 
 	stripe = sprite->draw_x_start - 1;
-	while (++stripe < sprite->dist)
+	while (++stripe < sprite->draw_x_end)
 	{
 		texture_position.x = (int)(256 * (stripe - (-1 * sprite->width / 2 + sprite->screen_correction)) * TEXTURE_WIDTH / sprite->width) / 256;
-		if (sprite->y_relative > 0 && stripe > 0 && stripe < SCREEN_WIDTH && sprite->y_relative < map->player->walls_distance[stripe])
+		if (sprite->y_relative > 0 && stripe > 0 && stripe < SCREEN_WIDTH && sprite->y_relative < map->player->walls_perp_distance[stripe])
 		{
 			y = sprite->draw_y_start - 1;
 			while (++y < sprite->draw_y_end)
 			{
 				distance = y * 256 - SCREEN_HEIGHT * 128 + sprite->height * 128;
-				texture_position.y = ((distance / TEXTURE_HEIGHT) / sprite->height) / 256;
-				put_pixel_on_img(screen, stripe, y, texture->addr[TEXTURE_WIDTH * texture_position.x + texture_position.y]);
-				//
+				texture_position.y = ((distance * TEXTURE_HEIGHT) / sprite->height) / 256;
+				put_pixel_on_img(screen, stripe, y, *(int *)(texture->addr + (TEXTURE_WIDTH * texture_position.y + texture_position.x * (texture->bpp / 8))));
 			}
 		}
+	}
+}
+
+void	check_if_sprites_is_sorted(int nbr, t_sprite **sprite_array)
+{
+	int	i;
+	double	temp;
+
+	i = 0;
+	temp = sprite_array[i]->dist;
+	while(++i < nbr)
+	{
+		if (temp < sprite_array[i]->dist)
+			printf("error\n");
+		temp = sprite_array[i]->dist;
 	}
 }
 
@@ -153,9 +169,9 @@ void	render_sprites(t_map *map, t_img *screen, t_img *texture)
 {
 	int	i;
 
-	i = -1;
+	i = map->nbr_sprites;
 	sort_sprites_array(map->sprites_array, 0, map->nbr_sprites - 1);
-	while (++i < map->nbr_sprites)
+	while (--i >= 0)
 	{
 		rotate_sprite_face_camera(map->player, map->sprites_array[i]);
 		get_sprite_drawing_infos(map->sprites_array[i]);
