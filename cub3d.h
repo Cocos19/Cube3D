@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/24 16:28:26 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:13:44 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define TEXTURE_WIDTH 128
 # define TEXTURE_HEIGHT 128
 # define SPRITE_WIDTH 128
-# define SPRITE_HEIGHT 128
+# define SPRITE_HEIGHT 132
 # define MOUSE_ORIGIN_X 960
 # define MOUSE_ORIGIN_Y 540
 
@@ -71,15 +71,13 @@
 
 /*HOOKS MASKS*/
 
-#define KEYPRESS 2
-#define KEYRELEASE 3
-#define BUTTONPRESS 4
-#define DESTROYNOTIFY 17
+# define KEYPRESS 2
+# define KEYRELEASE 3
+# define BUTTONPRESS 4
+# define DESTROYNOTIFY 17
 
 /*PLAYER*/
 
-// # define HALF_FOV 0.5759586532
-// # define FOV 1.1519173063 //implentation with angle method value is in radian
 # define HALF_FOV 0.69
 # define FOV 1.38
 # define ROTATION_SPEED 0.1
@@ -129,7 +127,7 @@ typedef struct s_ray
 	t_dot_index	origin;
 	int			step_x;
 	int			step_y;
-} t_ray;
+}	t_ray;
 
 typedef struct s_img
 {
@@ -156,14 +154,14 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	int			mini_map_border_color;
-	int			mini_map_floor_color;
-	int			mini_map_walls_color;
-	int			mini_map_empty_color;
-	int			mini_map_player_color;
-	int			mini_map_fov_color;
-	int			mini_map_door_color;
-	int			mini_map_pillar_color;
+	int			minimap_border_color;
+	int			minimap_floor_color;
+	int			minimap_walls_color;
+	int			minimap_empty_color;
+	int			minimap_player_color;
+	int			minimap_fov_color;
+	int			minimap_door_color;
+	int			minimap_pillar_color;
 	int			celling_color;
 	int			floor_color;
 	int			map_height;
@@ -174,8 +172,6 @@ typedef struct s_map
 	t_img		*south_texture;
 	t_img		*west_texture;
 	t_img		*east_texture;
-	t_img		*gun_texture;
-	t_img		*gun_texture2;
 	char		**tiles;
 	t_player	*player;
 }	t_map;
@@ -193,59 +189,72 @@ typedef struct s_display_datas
 
 /*ERROR HANDLING*/
 
-void	map_error_and_exit(t_display *display, char *error_msg);
-void	strerror_and_exit(t_display *display, char *error_msg);
+void		map_error_and_exit(t_display *display, char *error_msg);
+void		strerror_and_exit(t_display *display, char *error_msg);
 
 /*MEMORY FREE*/
 
-void	free_display(t_display *display);
+void		free_display(t_display *display);
 
 /*IMAGE MANAGEMENT*/
 
-void	encode_pixel_rgb(int *pixel, uint8_t red, uint8_t green, uint8_t blue);
-void	render_image(t_img *image, t_display *display);
-int		pixel_is_in_minimap(double x, double y);
-int		pixel_is_in_minimap_border(double x, double y);
-void	put_pixel_on_img(t_img *image, int x, int y, int color);
-t_img	*init_gun_image(t_display *display, char *path);
-t_img	*init_texture_image(t_display *display, char *path);
-t_img	*init_image(t_display *display);
+void		encode_pixel_rgb(int *pixel, uint8_t red, uint8_t green,
+				uint8_t blue);
+void		render_image(t_img *image, t_display *display);
+int			pixel_is_in_minimap(double x, double y);
+int			pixel_is_in_minimap_border(double x, double y);
+void		put_pixel_on_img(t_img *image, int x, int y, int color);
+t_img		*init_texture_image(t_display *display, char *path);
+t_img		*init_screen_image(t_display *display);
+void		get_ray_side_distance(t_ray *ray, t_map *map);
+void		draw_column(t_display *display, t_ray *ray, int *x, int *side);
+void		update_walls_perp_distance(t_map *map, t_ray *ray, int *x,
+				int *side);
+int			get_pixel_color(t_img *texture, t_dot_index *texture_position);
+void		init_ray(t_ray *ray, t_map *map, int *x);
+
+/*INIT DATAS STRUCTURES*/
+
+t_display	*init_display(char *map_name);
+void		init_map(t_display *display, char *map_name);
 
 /*LOOPS ANF HOOKS*/
 
-int		ft_mlx_hook(t_display *display);
-int		ft_loop_hook(t_display *display);
-int		ft_key_hook(int key, t_display *display);
-int		ft_key_press_hook(int key, t_display *display);
-int		ft_key_release_hook(int key, t_display *display);
-int		ft_mouse_hook(int key, int x, int y, t_display *display);
+int			ft_mlx_hook(t_display *display);
+int			ft_loop_hook(t_display *display);
+int			ft_key_hook(int key, t_display *display);
+int			ft_key_press_hook(int key, t_display *display);
+int			ft_key_release_hook(int key, t_display *display);
+int			ft_mouse_hook(int key, int x, int y, t_display *display);
 
 /*MAP INIT*/
 
-void	parse_map(t_display *display, char *map_name);
-int		check_map_validity(t_display *display);
-int		update_map_info(t_display *display, char *str, int info);
-int		init_player_infos(t_display *display, char c, int i, int j);
+void		parse_map(t_display *display, char *map_name);
+int			check_map_validity(t_display *display);
+int			update_map_info(t_display *display, char *str, int info);
+int			init_player_infos(t_display *display, char c, int i, int j);
 
 /*Minimap*/
 
-void	put_pixel_on_minimap(t_img *image, t_map *map, t_dot *pixel);
-int		pixel_is_in_fov(t_map *map, t_dot *pixel);
-int		minimap_raycast(t_map *map, t_dot	*pixel);
+void		put_pixel_on_minimap(t_img *image, t_map *map, t_dot *pixel);
+int			pixel_is_in_fov(t_map *map, t_dot *pixel);
+int			minimap_raycast(t_map *map, t_dot	*pixel);
 
 /*Moves*/
 
-void	move_forward(t_display *display);
-void	move_backward(t_display *display);
-void	turn_right(t_display *display);
-void	turn_left(t_display *display);
-void	move_player(t_display *display);
-int		open_door(t_map *map);
+void		move_forward(t_display *display);
+void		move_backward(t_display *display);
+void		turn_right(t_display *display);
+void		turn_left(t_display *display);
+void		move_player(t_display *display);
+int			open_door(t_map *map);
+void		execute_mouse_moves(t_display *display);
 
 /*Sprites*/
 
 t_sprite	**get_sprites_array(t_display *display, t_sprite *sprites_lst);
 void		sort_sprites_array(t_sprite **sprites_array, int first, int last);
 void		render_sprites(t_map *map, t_img *screen, t_img *texture);
+void		get_sprites_distance(t_map *map);
 
 #endif

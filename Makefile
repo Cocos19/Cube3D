@@ -6,17 +6,19 @@
 #    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/11/20 14:46:10 by mprofett         ###   ########.fr        #
+#    Updated: 2023/11/27 15:40:28 by mprofett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 
-SRC			= src/image.c src/loop.c src/main.c src/parsing/check.c \
+SRC			= src/image.c src/image_utils.c src/image_screen_raycast_utils.c \
+			src/loop.c src/main.c src/parsing/check.c \
 			src/parsing/info_parsing.c src/minimap/fov.c src/memory_free.c \
 			src/parsing/init_player_infos.c src/minimap/raycasting.c \
-			src/minimap/put_pixel.c src/parsing/parse_map.c src/moves.c \
-			src/door.c src/sprites.c
+			src/minimap/put_pixel.c src/parsing/parse_map.c \
+			src/init_data_structures.c src/hooks.c src/moves.c \
+			src/moves_rotations.c src/door.c src/sprites.c src/sprites_utils.c \
 
 SRC_BONUS	=
 
@@ -38,7 +40,6 @@ RM			= rm -f
 
 C_FLAGS	= -Wall -Wextra -Werror
 
-#-lmlx
 MLX_FLAGS =  -framework OpenGL -framework AppKit
 
 %.o: %.c

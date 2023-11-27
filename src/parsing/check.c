@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/24 12:06:10 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:51:48 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	tile_is_valid(t_display *display, char c, int i, int j)
 	return (-1);
 }
 
-t_sprite *get_sprite(t_display *display, t_sprite *sprites_lst, int x, int y)
+t_sprite	*get_sprite(t_display *display, t_sprite *sprites_lst, int x, int y)
 {
 	t_sprite	*new;
 
@@ -96,8 +96,6 @@ int	check_map_validity(t_display *display)
 				map_error_and_exit(display, "Invalid character on map");
 		}
 	}
-	if (display->map->player->exist == 0)
-		map_error_and_exit(display, "No player on map");
 	display->map->sprites_array = get_sprites_array(display, sprites_lst);
 	return (0);
 }

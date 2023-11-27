@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:34:13 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/24 12:15:56 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:51:03 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	map_info_is_complete(t_display *display)
 	return (1);
 }
 
-char	*get_map_textures_and_colors(t_display *display, char *next_line, int fd)
+char	*get_map_text_and_colors(t_display *display, char *next_line, int fd)
 {
 	int	info_type;
 
@@ -113,9 +113,12 @@ void	parse_map(t_display *display, char *map_name)
 	next_line = get_next_line(fd, 100);
 	if (!next_line)
 		map_error_and_exit(display, "Empty map file");
-	next_line = get_map_textures_and_colors(display, next_line, fd);
+	next_line = get_map_text_and_colors(display, next_line, fd);
 	display->map->tiles = get_map_tiles(display, next_line, fd);
-	if (!display->map->tiles || !(check_map_validity(display) == 0))
-		map_error_and_exit(display, "empty map");
+	if (!display->map->tiles)
+		map_error_and_exit(display, "Empty Map");
+	check_map_validity(display);
+	if (display->map->player->exist == 0)
+		map_error_and_exit(display, "No player on map");
 	close(fd);
 }

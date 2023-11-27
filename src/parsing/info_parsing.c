@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:17:42 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/24 12:17:17 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:51:32 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_img	*load_texture(t_display *display, char *str)
 {
-	t_img *result;
+	t_img	*result;
 	char	*path;
 	char	*start;
 	int		i;
@@ -76,7 +76,7 @@ int	update_map_info(t_display *display, char *str, int info)
 {
 	str = ft_skip_character(str, ' ');
 	if (info == NO && !display->map->north_texture)
-			display->map->north_texture = load_texture(display, str);
+		display->map->north_texture = load_texture(display, str);
 	else if (info == SO && !display->map->south_texture)
 		display->map->south_texture = load_texture(display, str);
 	else if (info == WE && !display->map->west_texture)

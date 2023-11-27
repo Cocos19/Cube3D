@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:48:24 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 14:17:34 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:52:09 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	minimap_raycast(t_map *map, t_dot	*end_point)
 	t_ray		ray;
 
 	init_minimap_ray(&ray, map, end_point);
-	while(1)
+	while (1)
 	{
 		if ((int)ray.origin.x == (int)end_point->x
 			&& (int)ray.origin.y == (int)end_point->y)
@@ -77,4 +77,3 @@ int	minimap_raycast(t_map *map, t_dot	*end_point)
 			return (1);
 	}
 }
-

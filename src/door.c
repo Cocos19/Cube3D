@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:08:10 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 16:36:46 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:11:38 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,19 @@ void	init_door_ray(t_ray *ray, t_map *map)
 double	get_door_distance(t_dot *origin, t_dot_index *end_point)
 {
 	return (sqrtf(pow(end_point->x - origin->x, 2)
-		+ pow(end_point->x - origin->x, 2)));
+			+ pow(end_point->x - origin->x, 2)));
 }
 
-/*This function will cast a ray in player FOV direction and check if it reach a door.
-If a door is right in front of the player and in interaction reach, it will transform the door tile, in an empty tile*/
+/*This function will cast a ray in player FOV direction and
+check if it reach a door. If a door is right in front of the player
+and in interaction reach, it will transform the door tile, in an empty tile*/
 
 int	open_door(t_map *map)
 {
 	t_ray		ray;
 
 	init_door_ray(&ray, map);
-	while(1)
+	while (1)
 	{
 		if (ray.side_distance.x < ray.side_distance.y)
 		{
@@ -80,7 +81,8 @@ int	open_door(t_map *map)
 			ray.side_distance.y += ray.delta_distance.y;
 		}
 		if (map->tiles[(int)ray.origin.x][(int)ray.origin.y] == 'D'
-			&& get_door_distance(map->player->position, &ray.origin) <= INTERACT_REACH)
+			&& get_door_distance(map->player->position, &ray.origin)
+				<= INTERACT_REACH)
 		{
 			map->tiles[(int)ray.origin.x][(int)ray.origin.y] = '0';
 			return (0);
