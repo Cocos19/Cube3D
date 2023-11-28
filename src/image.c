@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:10:09 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:32:35 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,19 @@ void	render_background(t_img *image, t_display *display)
 	}
 }
 
-int	cast_ray(t_map *map, t_ray *ray, int *side)
+void	update_walls_perp_distance(t_map *map, t_ray *ray, int *x, int *side)
 {
-	int	hit;
+	if (*side == 0)
+		map->player->walls_perp_distance[*x]
+			= (ray->side_distance.x - ray->delta_distance.x);
+	else
+		map->player->walls_perp_distance[*x]
+			= (ray->side_distance.y - ray->delta_distance.y);
+}
 
-	hit = 0;
-	while (hit == 0)
+void	cast_ray(t_map *map, t_ray *ray, int *side)
+{
+	while (ray->hit == 0)
 	{
 		if (ray->side_distance.x < ray->side_distance.y)
 		{
@@ -76,34 +83,28 @@ int	cast_ray(t_map *map, t_ray *ray, int *side)
 			*side = 1;
 		}
 		if (map->tiles[(int)ray->origin.x][(int)ray->origin.y] == '1')
-			hit = 1;
+			ray->hit = 1;
 		else if (map->tiles[(int)ray->origin.x][(int)ray->origin.y] == 'D')
-			hit = 2;
+			ray->hit = 2;
 	}
-	return (hit);
-}
-
-void	raycast(t_display *display, int *x)
-{
-	t_ray	ray;
-	int		hit;
-	int		side;
-
-	side = 0;
-	init_ray(&ray, display->map, x);
-	hit = cast_ray(display->map, &ray, &side);
-	update_walls_perp_distance(display->map, &ray, x, &side);
-	draw_column(display, &ray, x, &side);
 }
 
 void	render_image(t_img *image, t_display *display)
 {
-	int	x;
+	t_ray	ray;
+	int		x;
+	int		side;
 
 	render_background(image, display);
 	x = -1;
 	while (++x < SCREEN_WIDTH)
-		raycast(display, &x);
+	{
+		side = 0;
+		init_ray(&ray, display->map, &x);
+		cast_ray(display->map, &ray, &side);
+		update_walls_perp_distance(display->map, &ray, &x, &side);
+		draw_column(display, &ray, &x, &side);
+	}
 	render_sprites(display->map, image, display->map->sprite_texture);
 	render_minimap(image, display);
 }

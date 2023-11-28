@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 18:58:28 by mprofett          #+#    #+#             */
-/*   Updated: 2023/05/04 19:00:09 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:40:26 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	ft_sort_str_array(char **array)
 				array[i] = array[j];
 				array[j] = buffer;
 			}
-		j++;
+			j++;
 		}
-	i++;
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:13:26 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/18 11:43:24 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:57:45 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int	radian_is_in_fov_range(double player_rad, double pix_rad)
 	return (1);
 }
 
-double	get_player_direction_rad(t_vector *pixel)
+double	get_player_direction_rad(t_vector *direction)
 {
 	double	radian;
 
-	radian = acos((pixel->y * 5)
-			/ (sqrtf((powf(pixel->y, 2)) + powf(pixel->x, 2)) * 5));
-	if (pixel->x > 0.0)
+	radian = acos((direction->y * 5)
+			/ (sqrtf((powf(direction->y, 2)) + powf(direction->x, 2)) * 5));
+	if (direction->x > 0.0)
 		radian *= -1;
 	if (radian < -1 * (PI / 2))
 		return ((PI / 2) + PI - (fabs(radian)));
@@ -75,4 +75,12 @@ int	pixel_is_in_fov(t_map *map, t_dot *pixel)
 		return (minimap_raycast(map, &end_point));
 	}
 	return (1);
+}
+
+void	put_empty_pix(t_img *img, t_map *map, t_dot *pixel, t_dot *map_pix)
+{
+	if (pixel_is_in_fov(map, map_pix) == 0)
+		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_fov_color);
+	else
+		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_floor_color);
 }

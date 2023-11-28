@@ -6,31 +6,29 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:06:19 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:35:15 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	init_sprite(t_display *display)
+t_img	*init_sprite(t_display *display, char *path)
 {
-	int	x;
-	int	y;
+	t_img	*result;
+	int		x;
+	int		y;
 
 	x = SPRITE_WIDTH;
 	y = SPRITE_HEIGHT;
-	display->map->sprite_texture = malloc(sizeof(t_img));
-	if (!display->map->sprite_texture)
+	result = malloc(sizeof(t_img));
+	if (!result)
 		strerror_and_exit(display, "malloc sprite");
-	display->map->sprite_texture->mlx_img
-		= mlx_xpm_file_to_image(display->mlx, "./textures/spr.xpm", &x, &y);
-	if (!display->map->sprite_texture->mlx_img)
+	result->mlx_img = mlx_xpm_file_to_image(display->mlx, path, &x, &y);
+	if (!result->mlx_img)
 		strerror_and_exit(display, "performing texture extraction");
-	display->map->sprite_texture->addr
-		= mlx_get_data_addr(display->map->sprite_texture->mlx_img,
-			&display->map->sprite_texture->bpp,
-			&display->map->sprite_texture->line_len,
-			&display->map->sprite_texture->endian);
+	result->addr = mlx_get_data_addr(result->mlx_img, &result->bpp,
+			&result->line_len, &result->endian);
+	return (result);
 }
 
 void	init_minimap_colors_and_sprite(t_display *display)
@@ -43,6 +41,10 @@ void	init_minimap_colors_and_sprite(t_display *display)
 	encode_pixel_rgb(&display->map->minimap_fov_color, 50, 110, 186);
 	encode_pixel_rgb(&display->map->minimap_door_color, 80, 80, 186);
 	encode_pixel_rgb(&display->map->minimap_pillar_color, 120, 80, 156);
+	display->map->sprite_1 = init_sprite(display, "./textures/spr1.xpm");
+	display->map->sprite_2 = init_sprite(display, "./textures/spr2.xpm");
+	display->map->sprite_3 = init_sprite(display, "./textures/spr3.xpm");
+	display->map->sprite_texture = display->map->sprite_1;
 }
 
 /*
@@ -60,7 +62,6 @@ void	init_map(t_display *display, char *map_name)
 	if (!display->map)
 		strerror_and_exit(display, "malloc map");
 	init_minimap_colors_and_sprite(display);
-	init_sprite(display);
 	display->map->player = malloc(sizeof(t_player));
 	if (!display->map->player)
 		strerror_and_exit(display, "malloc player");
@@ -69,6 +70,8 @@ void	init_map(t_display *display, char *map_name)
 	display->map->south_texture = NULL;
 	display->map->west_texture = NULL;
 	display->map->east_texture = NULL;
+	display->map->door_texture
+		= init_texture_image(display, "./textures/door.xpm");
 	display->map->nbr_sprites = 0;
 	display->map->celling_color = -1;
 	display->map->floor_color = -1;

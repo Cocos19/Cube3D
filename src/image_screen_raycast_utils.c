@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:37:54 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:09:04 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:31:44 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_ray(t_ray *ray, t_map *map, int *x)
 	ray->origin.y = (int)map->player->position->y;
 	ray->step_x = 1;
 	ray->step_y = 1;
+	ray->hit = 0;
 	if (ray->direction.x == 0)
 		ray->delta_distance.x = 1e30;
 	else
@@ -34,16 +35,6 @@ void	init_ray(t_ray *ray, t_map *map, int *x)
 	else
 		ray->delta_distance.y = fabs(1 / ray->direction.y);
 	get_ray_side_distance(ray, map);
-}
-
-void	update_walls_perp_distance(t_map *map, t_ray *ray, int *x, int *side)
-{
-	if (*side == 0)
-		map->player->walls_perp_distance[*x]
-			= (ray->side_distance.x - ray->delta_distance.x);
-	else
-		map->player->walls_perp_distance[*x]
-			= (ray->side_distance.y - ray->delta_distance.y);
 }
 
 int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side)
@@ -76,6 +67,28 @@ int	get_texture_y_position(int *draw_start, int *line_height)
 	return (texture_distance * step);
 }
 
+t_img	*get_texture(t_map *map, t_ray *ray, int *side)
+{
+	if (ray->hit == 2)
+		return (map->door_texture);
+	if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 0)
+		return (map->south_texture);
+	else if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 1)
+		return (map->east_texture);
+	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 0)
+		return (map->north_texture);
+	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 1)
+		return (map->east_texture);
+	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 0)
+		return (map->north_texture);
+	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 1)
+		return (map->west_texture);
+	else if (ray->direction.x >= 0 && ray->direction.y < 0 && *side == 0)
+		return (map->south_texture);
+	else
+		return (map->west_texture);
+}
+
 void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 {
 	t_dot_index	texture_position;
@@ -97,12 +110,10 @@ void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 	while (draw_start < draw_end)
 	{
 		texture_position.y = get_texture_y_position(&draw_start, &line_height);
-		color = get_pixel_color(display->map->north_texture, &texture_position);
+		color = get_pixel_color(get_texture(display->map, ray, side),
+				&texture_position);
 		if ((color & 0x00FFFFFF) != 0)
 			put_pixel_on_img(display->new_img, *x, draw_start, color);
 		++draw_start;
 	}
 }
-
-/*line 100 need to be updated in order to send the right texture to
-get_pixel_color function*/

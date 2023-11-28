@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:13:44 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:57:36 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define TEXTURE_WIDTH 128
 # define TEXTURE_HEIGHT 128
 # define SPRITE_WIDTH 128
-# define SPRITE_HEIGHT 132
+# define SPRITE_HEIGHT 128
 # define MOUSE_ORIGIN_X 960
 # define MOUSE_ORIGIN_Y 540
 
@@ -81,7 +81,7 @@
 # define HALF_FOV 0.69
 # define FOV 1.38
 # define ROTATION_SPEED 0.1
-# define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.2
 # define INTERACT_REACH 3
 
 typedef struct s_vector
@@ -127,6 +127,7 @@ typedef struct s_ray
 	t_dot_index	origin;
 	int			step_x;
 	int			step_y;
+	int			hit;
 }	t_ray;
 
 typedef struct s_img
@@ -172,6 +173,10 @@ typedef struct s_map
 	t_img		*south_texture;
 	t_img		*west_texture;
 	t_img		*east_texture;
+	t_img		*door_texture;
+	t_img		*sprite_1;
+	t_img		*sprite_2;
+	t_img		*sprite_3;
 	char		**tiles;
 	t_player	*player;
 }	t_map;
@@ -204,14 +209,14 @@ void		render_image(t_img *image, t_display *display);
 int			pixel_is_in_minimap(double x, double y);
 int			pixel_is_in_minimap_border(double x, double y);
 void		put_pixel_on_img(t_img *image, int x, int y, int color);
+void		put_empty_pix(t_img *img, t_map *map, t_dot *pixel, t_dot *map_pix);
 t_img		*init_texture_image(t_display *display, char *path);
 t_img		*init_screen_image(t_display *display);
 void		get_ray_side_distance(t_ray *ray, t_map *map);
 void		draw_column(t_display *display, t_ray *ray, int *x, int *side);
-void		update_walls_perp_distance(t_map *map, t_ray *ray, int *x,
-				int *side);
 int			get_pixel_color(t_img *texture, t_dot_index *texture_position);
 void		init_ray(t_ray *ray, t_map *map, int *x);
+double		get_player_direction_rad(t_vector *direction);
 
 /*INIT DATAS STRUCTURES*/
 
@@ -234,7 +239,7 @@ int			check_map_validity(t_display *display);
 int			update_map_info(t_display *display, char *str, int info);
 int			init_player_infos(t_display *display, char c, int i, int j);
 
-/*Minimap*/
+/*MINIMAP*/
 
 void		put_pixel_on_minimap(t_img *image, t_map *map, t_dot *pixel);
 int			pixel_is_in_fov(t_map *map, t_dot *pixel);

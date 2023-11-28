@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:31:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 15:57:09 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:57:58 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,10 @@ void	put_pixel_on_minimap(t_img *img, t_map *map, t_dot *pixel)
 		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_player_color);
 	else if (pixel_is_out_of_map(map, (int)pix_index.x, (int)pix_index.y) == 0)
 		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_empty_color);
+	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == ' ')
+		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_empty_color);
 	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == '0')
-	{
-		if (pixel_is_in_fov(map, &pix_on_minimap) == 0)
-			put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_fov_color);
-		else
-			put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_floor_color);
-	}
+		put_empty_pix(img, map, pixel, &pix_on_minimap);
 	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == '1')
 		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_walls_color);
 	else if (map->tiles[(int)pix_index.y][(int)pix_index.x] == 'D')

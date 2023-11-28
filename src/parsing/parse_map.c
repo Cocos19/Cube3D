@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 13:34:13 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 15:51:03 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:26:51 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 char	**get_map_tiles(t_display *display, char *next_line, int fd)
 {
-	char	**tiles_values;
 	char	**temp_tab;
 	char	*temp;
 
-	tiles_values = malloc(sizeof(char *));
-	if (!tiles_values)
+	temp_tab = malloc(sizeof(char **));
+	if (!temp_tab)
 		strerror_and_exit(display, "malloc map tiles");
-	tiles_values[0] = NULL;
+	temp_tab[0] = NULL;
 	while (next_line)
 	{
 		temp = ft_strndup(next_line, ft_strlen(next_line) - 2);
-		temp_tab = ft_add_to_str_array(tiles_values, temp);
-		free(temp);
-		tiles_values = temp_tab;
+		free(next_line);
+		temp_tab = ft_add_to_str_array(temp_tab, temp);
 		next_line = get_next_line(fd, 100);
 		if (next_line && next_line[0] == '\n')
 			map_error_and_exit(display, "Empty line on map content");
 		++display->map->map_height;
 	}
-	return (tiles_values);
+	return (temp_tab);
 }
 
 int	is_map_texture_or_color(t_display *display, char *map_line)
