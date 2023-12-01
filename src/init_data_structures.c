@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_structures.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 15:35:15 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:48:09 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_img	*init_sprite(t_display *display, char *path)
 		strerror_and_exit(display, "performing texture extraction");
 	result->addr = mlx_get_data_addr(result->mlx_img, &result->bpp,
 			&result->line_len, &result->endian);
+	if (!result->addr)
+		strerror_and_exit(display, "getting sprite address");
 	return (result);
 }
 
