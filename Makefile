@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+         #
+#    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/11/28 13:23:26 by mprofett         ###   ########.fr        #
+#    Updated: 2023/12/01 14:43:24 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CC			= gcc
 
 RM			= rm -f
 
-C_FLAGS	= -Wall -Wextra -Werror
+C_FLAGS	= -Wall -Wextra -Werror -g3
 
 MLX_FLAGS =  -framework OpenGL -framework AppKit
 
@@ -48,7 +48,7 @@ MLX_FLAGS =  -framework OpenGL -framework AppKit
 all: ${NAME}
 
 ${NAME}: ${OBJ} ${LIBFT} ${MLX}
-	${CC} ${OBJ} -o  ${NAME} ${LIBFT} ${MLX_FLAGS} ${MLX}
+	${CC} $(C_FLAGS) ${OBJ} -o  ${NAME} ${LIBFT} ${MLX_FLAGS} ${MLX}
 
 ${LIBFT}:
 	${MAKE} bonus -C ${LIBFT_PATH}
