@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_screen_raycast_utils.c                       :+:      :+:    :+:   */
+/*   screen_raycast_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:37:54 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 14:31:44 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:35:27 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 void	init_ray(t_ray *ray, t_map *map, int *x)
 {
@@ -113,7 +113,7 @@ void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 		color = get_pixel_color(get_texture(display->map, ray, side),
 				&texture_position);
 		if ((color & 0x00FFFFFF) != 0)
-			put_pixel_on_img(display->new_img, *x, draw_start, color);
+			put_pixel_on_img(display->screen_img, *x, draw_start, color);
 		++draw_start;
 	}
 }

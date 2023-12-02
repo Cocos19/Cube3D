@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:18:58 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 14:10:02 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:36:41 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int	init_player_infos(t_display *display, char c, int i, int j)
 	display->map->player->exist = 1;
 	init_direction_infos(display->map->player, c);
 	init_plane_infos(display->map->player, c);
-	display->map->player->x = j + 0.5;
-	display->map->player->y = i + 0.5;
 	display->map->player->position->x = i + 0.5;
 	display->map->player->position->y = j + 0.5;
 	display->map->player->is_moving = -1;

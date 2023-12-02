@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 15:57:36 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:35:27 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@
 # define STRAF_RIGHT 2
 # define INTERACT 14
 # define RIGHT_CLICK 1
+# define DOOR_IS_OPEN 0
+# define DOOR_IS_CLOSED 1
 
 /*HOOKS MASKS*/
 
@@ -83,6 +85,14 @@
 # define ROTATION_SPEED 0.1
 # define MOVE_SPEED 0.2
 # define INTERACT_REACH 3
+
+typedef struct s_door
+{
+	int				x;
+	int				y;
+	int				is_open;
+	struct s_door	*next;
+}	t_door;
 
 typedef struct s_vector
 {
@@ -141,8 +151,6 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	double		x;
-	double		y;
 	double		*walls_perp_distance;
 	int			exist;
 	int			is_moving;
@@ -178,6 +186,7 @@ typedef struct s_map
 	t_img		*sprite_2;
 	t_img		*sprite_3;
 	char		**tiles;
+	t_door		*door_lst;
 	t_player	*player;
 }	t_map;
 
@@ -188,9 +197,12 @@ typedef struct s_display_datas
 	void	*mlx;
 	void	*win;
 	t_map	*map;
-	t_img	*old_img;
-	t_img	*new_img;
+	t_img	*screen_img;
 }	t_display;
+
+/*DOORS*/
+
+
 
 /*ERROR HANDLING*/
 
@@ -200,6 +212,9 @@ void		strerror_and_exit(t_display *display, char *error_msg);
 /*MEMORY FREE*/
 
 void		free_display(t_display *display);
+void		free_map_images(t_display *display);
+void		free_sprite_array(t_map *map);
+void		free_image(t_display *display, t_img *image);
 
 /*IMAGE MANAGEMENT*/
 
@@ -220,7 +235,7 @@ double		get_player_direction_rad(t_vector *direction);
 
 /*INIT DATAS STRUCTURES*/
 
-t_display	*init_display(char *map_name);
+void		init_display(t_display *display, char *map_name);
 void		init_map(t_display *display, char *map_name);
 
 /*LOOPS ANF HOOKS*/
@@ -251,9 +266,16 @@ void		move_forward(t_display *display);
 void		move_backward(t_display *display);
 void		turn_right(t_display *display);
 void		turn_left(t_display *display);
+void		straf_left(t_display *display);
+void		straf_right(t_display *display);
 void		move_player(t_display *display);
-int			open_door(t_map *map);
 void		execute_mouse_moves(t_display *display);
+int			open_or_close_door(t_map *map);
+int			get_door_status(t_door *door_lst, int x, int y);
+int			tile_is_an_open_door(t_map *map, int *x, int *y);
+void		add_to_door_lst(t_display *display, int *x, int *y);
+void		change_door_status(t_map *map, int *x, int *y);
+t_door		*get_door(t_door *door_lst, int x, int y);
 
 /*Sprites*/
 

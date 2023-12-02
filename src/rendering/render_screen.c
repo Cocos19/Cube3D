@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   render_screen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 14:32:35 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:34:48 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 void	render_minimap(t_img *image, t_display *display)
 {
@@ -66,7 +66,7 @@ void	update_walls_perp_distance(t_map *map, t_ray *ray, int *x, int *side)
 			= (ray->side_distance.y - ray->delta_distance.y);
 }
 
-void	cast_ray(t_map *map, t_ray *ray, int *side)
+void	cast_ray(t_display *display, t_ray *ray, int *side)
 {
 	while (ray->hit == 0)
 	{
@@ -82,9 +82,11 @@ void	cast_ray(t_map *map, t_ray *ray, int *side)
 			ray->origin.y += ray->step_y;
 			*side = 1;
 		}
-		if (map->tiles[(int)ray->origin.x][(int)ray->origin.y] == '1')
+		if (display->map->tiles[ray->origin.x][ray->origin.y] == '1')
 			ray->hit = 1;
-		else if (map->tiles[(int)ray->origin.x][(int)ray->origin.y] == 'D')
+		else if (display->map->tiles[ray->origin.x][ray->origin.y] == 'D'
+			&& get_door_status(display->map->door_lst, ray->origin.x,
+			ray->origin.y) == DOOR_IS_CLOSED)
 			ray->hit = 2;
 	}
 }
@@ -101,7 +103,7 @@ void	render_image(t_img *image, t_display *display)
 	{
 		side = 0;
 		init_ray(&ray, display->map, &x);
-		cast_ray(display->map, &ray, &side);
+		cast_ray(display, &ray, &side);
 		update_walls_perp_distance(display->map, &ray, &x, &side);
 		draw_column(display, &ray, &x, &side);
 	}

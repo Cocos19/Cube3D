@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 15:51:48 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:32:55 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ int	tile_is_valid(t_display *display, char c, int i, int j)
 {
 	if (!(check_if_tile_is_surrounded(display, i, j) == 0))
 		map_error_and_exit(display, "Map not surrounded by walls");
-	if (c == '0' || c == '1' || c == ' ' || c == 'D')
+	if (c == '0' || c == '1' || c == ' ')
 		return (0);
+	else if (c == 'D')
+	{
+		add_to_door_lst(display, &i, &j);
+		return (0);
+	}
 	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
 	else if (c == 'P')

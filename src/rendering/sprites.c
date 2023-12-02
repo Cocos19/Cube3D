@@ -6,11 +6,11 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 11:47:35 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:35:01 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite)
 {

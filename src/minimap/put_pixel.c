@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:31:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 15:57:58 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:36:49 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	put_pixel_on_minimap(t_img *img, t_map *map, t_dot *pixel)
 
 	pix_on_minimap.x = MINIMAP_CENTER_X - pixel->x;
 	pix_on_minimap.y = MINIMAP_CENTER_Y - pixel->y;
-	pix_index.x = map->player->x - (pix_on_minimap.x / MINIMAP_SCALE);
-	pix_index.y = map->player->y - (pix_on_minimap.y / MINIMAP_SCALE);
+	pix_index.x = map->player->position->y - (pix_on_minimap.x / MINIMAP_SCALE);
+	pix_index.y = map->player->position->x - (pix_on_minimap.y / MINIMAP_SCALE);
 	if (pixel_is_player(pix_on_minimap.x, pix_on_minimap.y) == 0)
 		put_pixel_on_img(img, pixel->x, pixel->y, map->minimap_player_color);
 	else if (pixel_is_out_of_map(map, (int)pix_index.x, (int)pix_index.y) == 0)

@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:48:24 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 15:52:09 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:39:24 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int	minimap_raycast(t_map *map, t_dot	*end_point)
 			ray.origin.y += ray.step_y;
 			ray.side_distance.y += ray.delta_distance.y;
 		}
-		if (map->tiles[(int)ray.origin.x][(int)ray.origin.y] != '0')
+		if (map->tiles[ray.origin.x][ray.origin.y] == '1'
+			|| (map->tiles[ray.origin.x][ray.origin.y] == 'D'
+			&& get_door_status(map->door_lst, ray.origin.x, ray.origin.y)))
 			return (1);
 	}
 }
