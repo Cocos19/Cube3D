@@ -6,11 +6,11 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:09:22 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 15:57:29 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:34:58 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 t_sprite	**get_sprites_array(t_display *display, t_sprite *sprites_lst)
 {

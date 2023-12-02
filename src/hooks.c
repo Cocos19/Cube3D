@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:30:51 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:10:35 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:13:47 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_key_press_hook(int key, t_display *display)
 	else if (key == STRAF_RIGHT)
 		display->map->player->is_strafing = STRAF_RIGHT;
 	else if (key == INTERACT)
-		open_door(display->map);
+		open_or_close_door(display->map);
 	return (0);
 }
 

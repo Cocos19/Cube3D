@@ -6,11 +6,11 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:08:10 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:11:38 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:45:49 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 void	get_door_ray_side_distance(t_ray *ray, t_map *map)
 {
@@ -59,11 +59,20 @@ double	get_door_distance(t_dot *origin, t_dot_index *end_point)
 			+ pow(end_point->x - origin->x, 2)));
 }
 
+int	tile_is_an_open_door(t_map *map, int *x, int *y)
+{
+	if (map->tiles[*x][*y] != 'D')
+		return (1);
+	else if (get_door_status(map->door_lst, *x, *y) == DOOR_IS_OPEN)
+		return (0);
+	else
+		return (1);
+}
 /*This function will cast a ray in player FOV direction and
 check if it reach a door. If a door is right in front of the player
 and in interaction reach, it will transform the door tile, in an empty tile*/
 
-int	open_door(t_map *map)
+int	open_or_close_door(t_map *map)
 {
 	t_ray		ray;
 
@@ -83,11 +92,8 @@ int	open_door(t_map *map)
 		if (map->tiles[(int)ray.origin.x][(int)ray.origin.y] == 'D'
 			&& get_door_distance(map->player->position, &ray.origin)
 				<= INTERACT_REACH)
-		{
-			map->tiles[(int)ray.origin.x][(int)ray.origin.y] = '0';
-			return (0);
-		}
-		else if (map->tiles[(int)ray.origin.x][(int)ray.origin.y] == '1')
+			change_door_status(map, &ray.origin.x, &ray.origin.y);
+		else if (map->tiles[ray.origin.x][ray.origin.y] == '1')
 			return (0);
 	}
 }

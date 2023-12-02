@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 15:32:10 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:36:32 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,12 @@ int	ft_loop_hook(t_display *display)
 {
 	static int	loop_counter = 0;
 
-	display->new_img = init_screen_image(display);
+	display->screen_img = init_screen_image(display);
 	move_player(display);
-	render_image(display->new_img, display);
+	render_image(display->screen_img, display);
 	mlx_clear_window(display->mlx, display->win);
-	if (display->old_img)
-	{
-		mlx_destroy_image(display->mlx, display->old_img->mlx_img);
-		free(display->old_img);
-		display->old_img = display->new_img;
-	}
-	else
-		display->old_img = display->new_img;
 	mlx_put_image_to_window(display->mlx, display->win,
-		display->old_img->mlx_img, 0, 0);
+		display->screen_img->mlx_img, 0, 0);
 	++loop_counter;
 	update_sprite_texture(display, &loop_counter);
 	return (0);

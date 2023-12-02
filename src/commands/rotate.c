@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves_rotations.c                                  :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:13:12 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/27 16:03:36 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:37:02 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 /*This functions perform a rotation of the direction and the plane vector
 on the players infos
@@ -53,30 +53,4 @@ void	turn_left(t_display *display)
 		* sin(ROTATION_SPEED);
 	display->map->player->plane->y = old_plane_x * sin(ROTATION_SPEED)
 		+ display->map->player->plane->y * cos(ROTATION_SPEED);
-}
-
-void	execute_mouse_moves(t_display *display)
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	y = -1;
-	mlx_mouse_get_pos(display->win, &x, &y);
-	if (x > 0 && x < SCREEN_WIDTH && y > 0 && y < SCREEN_HEIGHT
-		&& display->map->player->is_turning == -1
-		&& display->mouse_enabled == 1)
-	{
-		if (MOUSE_ORIGIN_X - x > 0)
-		{
-			turn_left(display);
-			display->mouse_x = x;
-		}
-		else if (MOUSE_ORIGIN_X - x < 0)
-		{
-			turn_right(display);
-			display->mouse_x = x;
-		}
-		mlx_mouse_move(display->win, MOUSE_ORIGIN_X, MOUSE_ORIGIN_Y);
-	}
 }

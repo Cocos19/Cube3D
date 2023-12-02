@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 14:26:55 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:51:07 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ void	check_if_arguments_are_valid(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_display	*display;
+	t_display	display;
 
 	check_if_arguments_are_valid(argc, argv);
-	display = init_display(argv[1]);
-	init_map(display, argv[1]);
-	mlx_loop_hook (display->mlx, &ft_loop_hook, display);
+	init_display(&display, argv[1]);
+	init_map(&display, argv[1]);
+	mlx_loop_hook (display.mlx, &ft_loop_hook, &display);
 	mlx_mouse_hide();
-	mlx_hook(display->win, BUTTONPRESS, 0, &ft_mouse_hook, display);
-	mlx_hook(display->win, KEYPRESS, 0, &ft_key_press_hook, display);
-	mlx_hook(display->win, KEYRELEASE, 0, &ft_key_release_hook, display);
-	mlx_hook(display->win, DESTROYNOTIFY, 0, &ft_mlx_hook, display);
-	mlx_loop(display->mlx);
+	mlx_hook(display.win, BUTTONPRESS, 0, &ft_mouse_hook, &display);
+	mlx_hook(display.win, KEYPRESS, 0, &ft_key_press_hook, &display);
+	mlx_hook(display.win, KEYRELEASE, 0, &ft_key_release_hook, &display);
+	mlx_hook(display.win, DESTROYNOTIFY, 0, &ft_mlx_hook, &display);
+	mlx_loop(display.mlx);
 	return (0);
 }
