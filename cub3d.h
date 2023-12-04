@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:03:26 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:04:16 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ int			ft_loop_hook(t_display *display);
 int			ft_key_hook(int key, t_display *display);
 int			ft_key_press_hook(int key, t_display *display);
 int			ft_key_release_hook(int key, t_display *display);
-int			ft_mouse_hook(int key, int x, int y, t_display *display);
+int			ft_mouse_hook(int key, t_display *display);
 
 /*MAP INIT*/
 
