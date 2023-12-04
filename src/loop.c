@@ -3,34 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 11:54:24 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:18:10 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_mlx_hook(t_display *display)
-{
-	free_display(display);
-	exit (EXIT_SUCCESS);
-	return (0);
-}
-
-void	update_sprite_texture(t_display *display, int *loop_counter)
-{
-	if (*loop_counter == 5)
-		display->map->sprite_texture = display->map->sprite_2;
-	else if (*loop_counter == 10)
-		display->map->sprite_texture = display->map->sprite_3;
-	else if (*loop_counter == 15)
-	{
-		*loop_counter = 0;
-		display->map->sprite_texture = display->map->sprite_1;
-	}
-}
+static void	update_sprite_texture(t_display *display, int *loop_counter);
 
 int	ft_loop_hook(t_display *display)
 {
@@ -43,5 +25,25 @@ int	ft_loop_hook(t_display *display)
 		display->screen_img->mlx_img, 0, 0);
 	++loop_counter;
 	update_sprite_texture(display, &loop_counter);
+	return (0);
+}
+
+static void	update_sprite_texture(t_display *display, int *loop_counter)
+{
+	if (*loop_counter == 5)
+		display->map->sprite_texture = display->map->sprite_2;
+	else if (*loop_counter == 10)
+		display->map->sprite_texture = display->map->sprite_3;
+	else if (*loop_counter == 15)
+	{
+		*loop_counter = 0;
+		display->map->sprite_texture = display->map->sprite_1;
+	}
+}
+
+int	ft_mlx_hook(t_display *display)
+{
+	free_display(display);
+	exit (EXIT_SUCCESS);
 	return (0);
 }
