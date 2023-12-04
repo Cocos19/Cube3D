@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 14:35:27 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:15:25 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ allow only on paramater to be passed to the hook functions*/
 
 void	init_display(t_display *display, char *map_name)
 {
+	display->mlx = NULL;
 	display->mlx = mlx_init();
 	if (!display->mlx)
 		strerror_and_exit(display, "mlx init");
