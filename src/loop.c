@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 14:36:32 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:54:24 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_loop_hook(t_display *display)
 {
 	static int	loop_counter = 0;
 
-	display->screen_img = init_screen_image(display);
 	move_player(display);
 	render_image(display->screen_img, display);
 	mlx_clear_window(display->mlx, display->win);

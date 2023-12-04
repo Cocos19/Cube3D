@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 10:21:32 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:47:38 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_display(t_display *display, char *map_name)
 		= mlx_new_window(display->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, map_name);
 	if (!display->win)
 		strerror_and_exit(display, "mlx_new_window");
-	display->screen_img = NULL;
+	display->screen_img = init_screen_image(display);
 	display->mouse_x = MOUSE_ORIGIN_X;
 	display->mouse_enabled = 1;
 }
