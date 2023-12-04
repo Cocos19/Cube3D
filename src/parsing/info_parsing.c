@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 15:17:42 by mprofett          #+#    #+#             */
-/*   Updated: 2023/11/28 14:22:50 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:33:34 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,14 @@ char	*get_numeric_argument(t_display *display, char *str, int *nbr)
 	else if (*nbr > 255 || *nbr < 0)
 		map_error_and_exit(display, "Wrong argument format");
 	str = str + i;
-	str = ft_skip_character(str, ' ');
 	free(str_to_convert);
+	return (str);
+}
+
+static char	*ft_skip_comma(char *str, char c)
+{
+	if (str && *str && *str == c)
+		++str;
 	return (str);
 }
 
@@ -64,7 +70,9 @@ int	get_color_info(t_display *display, char *str)
 	int	b;
 
 	str = get_numeric_argument(display, str, &r);
+	str = ft_skip_comma(str, ',');
 	str = get_numeric_argument(display, str, &g);
+	str = ft_skip_comma(str, ',');
 	str = get_numeric_argument(display, str, &b);
 	if (*str != '\n' && *str != '\0')
 		map_error_and_exit(display, "Wrong argument format");
