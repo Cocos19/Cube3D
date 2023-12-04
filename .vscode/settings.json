@@ -19,6 +19,7 @@
 		"ios": "c",
 		"string": "c",
 		"string_view": "c",
-		"vector": "c"
+		"vector": "c",
+		"errno.h": "c"
 	}
 }
