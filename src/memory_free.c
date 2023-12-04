@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:11 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 10:06:45 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:23:22 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_display(t_display *display)
 		free_map(display);
 	if (display->win)
 		mlx_destroy_window(display->mlx, display->win);
-	if (display->screen_img && display->screen_img->mlx_img)
+	if (display->screen_img)
 		free_image(display, display->screen_img);
 	if (display->mlx)
 		free(display->mlx);
@@ -62,5 +62,6 @@ void	strerror_and_exit(t_display *display, char *error_msg)
 	if (display)
 		free_display(display);
 	ft_printf("Error when %s: %s\n", error_msg, strerror(errno));
+	system("leaks cub3D");
 	exit (EXIT_FAILURE);
 }

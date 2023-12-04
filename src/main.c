@@ -6,26 +6,13 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:27:04 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:51:07 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:22:29 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	check_if_arguments_are_valid(int argc, char **argv)
-{
-	if (argc != 2)
-	{
-		printf("Wrong number of arguments\n");
-		exit(EXIT_FAILURE);
-	}
-	else if (ft_strlen(argv[1]) < 5
-		|| !(strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 5) == 0))
-	{
-		printf("Invalid Map Format\n");
-		exit(EXIT_FAILURE);
-	}
-}
+static void	check_if_arguments_are_valid(int argc, char **argv);
 
 int	main(int argc, char **argv)
 {
@@ -42,4 +29,19 @@ int	main(int argc, char **argv)
 	mlx_hook(display.win, DESTROYNOTIFY, 0, &ft_mlx_hook, &display);
 	mlx_loop(display.mlx);
 	return (0);
+}
+
+static void	check_if_arguments_are_valid(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		printf("Wrong number of arguments\n");
+		exit(EXIT_FAILURE);
+	}
+	else if (ft_strlen(argv[1]) < 5
+		|| !(strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 5) == 0))
+	{
+		printf("Invalid Map Format\n");
+		exit(EXIT_FAILURE);
+	}
 }

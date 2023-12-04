@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:12:08 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:38:47 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:26:48 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,6 @@ int	move_forward_y_is_allowed(t_map *map)
 
 void	move_forward(t_display *display)
 {
-	int	new_x;
-	int	new_y;
-
-	new_x = display->map->player->position->x
-		+ display->map->player->direction->x * MOVE_SPEED;
-	new_y = display->map->player->position->y
-		+ display->map->player->direction->y * MOVE_SPEED;
 	if (move_forward_x_is_allowed(display->map) == 0)
 	{
 		display->map->player->position->x
