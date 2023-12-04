@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:30:51 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:13:47 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:36:30 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	quit_game(t_display *display)
-{
-	free_display(display);
-	exit (EXIT_SUCCESS);
-}
-
 int	ft_key_press_hook(int key, t_display *display)
 {
 	if (key == ESCAPE)
-		quit_game(display);
+		exit (EXIT_SUCCESS);
 	else if (key == MOVE_FORWARD)
 		display->map->player->is_moving = MOVE_FORWARD;
 	else if (key == MOVE_BACKWARD)
@@ -56,7 +50,7 @@ void	execute_rotation(int key, t_display *display)
 int	ft_key_release_hook(int key, t_display *display)
 {
 	if (key == ESCAPE)
-		quit_game(display);
+		exit (EXIT_SUCCESS);
 	else if (key == MOVE_FORWARD)
 	{
 		if (display->map->player->is_moving == MOVE_FORWARD)
