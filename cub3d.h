@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:00:05 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:03:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,10 +199,6 @@ typedef struct s_display_datas
 	t_map	*map;
 	t_img	*screen_img;
 }	t_display;
-
-/*DOORS*/
-
-
 
 /*ERROR HANDLING*/
 
