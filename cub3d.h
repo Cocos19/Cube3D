@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:04:16 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:04:28 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,6 @@ int			get_door_status(t_door *door_lst, int x, int y);
 int			tile_is_an_open_door(t_map *map, int *x, int *y);
 void		add_to_door_lst(t_display *display, int *x, int *y);
 void		change_door_status(t_map *map, int *x, int *y);
-t_door		*get_door(t_door *door_lst, int x, int y);
 
 /*Sprites*/
 

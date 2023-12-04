@@ -3,25 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   door_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:22:53 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:46:46 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:52:07 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-void	change_door_status(t_map *map, int *x, int *y)
-{
-	t_door	*door;
-
-	door = get_door(map->door_lst, *x, *y);
-	if (door->is_open == DOOR_IS_OPEN)
-		door->is_open = DOOR_IS_CLOSED;
-	else
-		door->is_open = DOOR_IS_OPEN;
-}
+static t_door	*get_door(t_door *door_lst, int x, int y);
 
 int	get_door_status(t_door *door_lst, int x, int y)
 {
@@ -34,7 +25,18 @@ int	get_door_status(t_door *door_lst, int x, int y)
 		return (-1);
 }
 
-t_door	*get_door(t_door *door_lst, int x, int y)
+void	change_door_status(t_map *map, int *x, int *y)
+{
+	t_door	*door;
+
+	door = get_door(map->door_lst, *x, *y);
+	if (door->is_open == DOOR_IS_OPEN)
+		door->is_open = DOOR_IS_CLOSED;
+	else
+		door->is_open = DOOR_IS_OPEN;
+}
+
+static t_door	*get_door(t_door *door_lst, int x, int y)
 {
 	t_door	*temp;
 
