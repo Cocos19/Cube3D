@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:03:13 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:03:26 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,6 @@ void		turn_left(t_display *display);
 void		straf_left(t_display *display);
 void		straf_right(t_display *display);
 void		move_player(t_display *display);
-void		execute_mouse_moves(t_display *display);
 int			open_or_close_door(t_map *map);
 int			get_door_status(t_door *door_lst, int x, int y);
 int			tile_is_an_open_door(t_map *map, int *x, int *y);
