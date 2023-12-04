@@ -6,7 +6,7 @@
 /*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:11 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 10:23:22 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:47:59 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	free_display(t_display *display)
 		mlx_destroy_window(display->mlx, display->win);
 	if (display->screen_img)
 		free_image(display, display->screen_img);
-	if (display->mlx)
-		free(display->mlx);
 }
 
 void	map_error_and_exit(t_display *display, char *error_msg)
