@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   screen_raycast_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:37:54 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 14:35:27 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:03:52 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+
+static int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side);
+static int	get_texture_y_position(int *draw_start, int *line_height);
 
 void	init_ray(t_ray *ray, t_map *map, int *x)
 {
@@ -35,36 +38,6 @@ void	init_ray(t_ray *ray, t_map *map, int *x)
 	else
 		ray->delta_distance.y = fabs(1 / ray->direction.y);
 	get_ray_side_distance(ray, map);
-}
-
-int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side)
-{
-	double	wall_x;
-	int		result;
-
-	if (*side == 0)
-		wall_x = map->player->position->y
-			+ map->player->walls_perp_distance[*x] * ray->direction.y;
-	else
-		wall_x = map->player->position->x
-			+ map->player->walls_perp_distance[*x] * ray->direction.x;
-	wall_x -= floor((wall_x));
-	result = (int)(wall_x * TEXTURE_WIDTH);
-	if ((*side == 0 && ray->direction.x > 0)
-		|| (*side == 1 && ray->direction.y < 0))
-		result = TEXTURE_WIDTH - result - 1;
-	return (result);
-}
-
-int	get_texture_y_position(int *draw_start, int *line_height)
-{
-	double	step;
-	double	texture_distance;
-
-	step = 1.0 * TEXTURE_HEIGHT / *line_height;
-	texture_distance
-		= *draw_start - SCREEN_HEIGHT / 2 + *line_height / 2;
-	return (texture_distance * step);
 }
 
 t_img	*get_texture(t_map *map, t_ray *ray, int *side)
@@ -116,4 +89,34 @@ void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 			put_pixel_on_img(display->screen_img, *x, draw_start, color);
 		++draw_start;
 	}
+}
+
+static int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side)
+{
+	double	wall_x;
+	int		result;
+
+	if (*side == 0)
+		wall_x = map->player->position->y
+			+ map->player->walls_perp_distance[*x] * ray->direction.y;
+	else
+		wall_x = map->player->position->x
+			+ map->player->walls_perp_distance[*x] * ray->direction.x;
+	wall_x -= floor((wall_x));
+	result = (int)(wall_x * TEXTURE_WIDTH);
+	if ((*side == 0 && ray->direction.x > 0)
+		|| (*side == 1 && ray->direction.y < 0))
+		result = TEXTURE_WIDTH - result - 1;
+	return (result);
+}
+
+static int	get_texture_y_position(int *draw_start, int *line_height)
+{
+	double	step;
+	double	texture_distance;
+
+	step = 1.0 * TEXTURE_HEIGHT / *line_height;
+	texture_distance
+		= *draw_start - SCREEN_HEIGHT / 2 + *line_height / 2;
+	return (texture_distance * step);
 }
