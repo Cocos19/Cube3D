@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_structures.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 11:47:38 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:41:14 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_display(t_display *display, char *map_name)
 {
 	display->mlx = NULL;
 	display->mlx = mlx_init();
+	// display->mlx = NULL;
 	if (!display->mlx)
 		strerror_and_exit(display, "mlx init");
 	display->win
