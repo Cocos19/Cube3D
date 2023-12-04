@@ -3,16 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:35:01 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:15:34 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite)
+static void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite);
+static void	get_sprite_drawing_infos(t_sprite *sprite);
+static void	draw_sprite(t_map *map, t_img *screen, t_img *texture,
+	t_sprite *sprite);
+
+void	render_sprites(t_map *map, t_img *screen, t_img *texture)
+{
+	int	i;
+
+	i = map->nbr_sprites;
+	get_sprites_distance(map);
+	sort_sprites_array(map->sprites_array, 0, map->nbr_sprites - 1);
+	while (--i >= 0)
+	{
+		rotate_sprite_face_camera(map->player, map->sprites_array[i]);
+		get_sprite_drawing_infos(map->sprites_array[i]);
+		draw_sprite(map, screen, texture, map->sprites_array[i]);
+	}
+}
+
+static void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite)
 {
 	double	inverse_camera_matrix_determinant;
 	double	sprite_x;
@@ -31,7 +51,7 @@ void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite)
 			+ player->plane->x * sprite_y);
 }
 
-void	get_sprite_drawing_infos(t_sprite *sprite)
+static void	get_sprite_drawing_infos(t_sprite *sprite)
 {
 	sprite->screen_correction = (int)((SCREEN_WIDTH / 2)
 			* (1 + sprite->x_relative / sprite->y_relative));
@@ -60,7 +80,8 @@ int	sprite_is_on_screen(t_map *map, t_sprite *sprite)
 	return (1);
 }
 
-void	draw_sprite(t_map *map, t_img *screen, t_img *texture, t_sprite *sprite)
+static void	draw_sprite(t_map *map, t_img *screen, t_img *texture,
+	t_sprite *sprite)
 {
 	int			y;
 	int			distance;
@@ -85,20 +106,5 @@ void	draw_sprite(t_map *map, t_img *screen, t_img *texture, t_sprite *sprite)
 			}
 		}
 		++sprite->draw_x_start;
-	}
-}
-
-void	render_sprites(t_map *map, t_img *screen, t_img *texture)
-{
-	int	i;
-
-	i = map->nbr_sprites;
-	get_sprites_distance(map);
-	sort_sprites_array(map->sprites_array, 0, map->nbr_sprites - 1);
-	while (--i >= 0)
-	{
-		rotate_sprite_face_camera(map->player, map->sprites_array[i]);
-		get_sprite_drawing_infos(map->sprites_array[i]);
-		draw_sprite(map, screen, texture, map->sprites_array[i]);
 	}
 }
