@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:30:11 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 15:59:05 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:04:37 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ void	strerror_and_exit(t_display *display, char *error_msg)
 	if (display)
 		free_display(display);
 	ft_printf("Error when %s: %s\n", error_msg, strerror(errno));
-	system("leaks cub3D");
 	exit (EXIT_FAILURE);
 }
