@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:28:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:00:10 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:09:50 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_img	*init_sprite(t_display *display, char *path);
 	- all the maps datas (tiles, textures, player informations,...)
 
 	We need a super data structure like this because all the mlx hooks functions
-	allow only on parameter to be passed to the hook functions
+	allow only one parameter to be passed to the hook functions
 */
 void	init_display(t_display *display, char *map_name)
 {
