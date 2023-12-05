@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 19:15:34 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/05 08:55:06 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite);
 static void	get_sprite_drawing_infos(t_sprite *sprite);
 static void	draw_sprite(t_map *map, t_img *screen, t_img *texture,
-	t_sprite *sprite);
+				t_sprite *sprite);
 
 void	render_sprites(t_map *map, t_img *screen, t_img *texture)
 {
@@ -71,7 +71,7 @@ static void	get_sprite_drawing_infos(t_sprite *sprite)
 		sprite->draw_y_end = SCREEN_HEIGHT - 1;
 }
 
-int	sprite_is_on_screen(t_map *map, t_sprite *sprite)
+static int	sprite_is_on_screen(t_map *map, t_sprite *sprite)
 {
 	if (sprite->y_relative > 0 && sprite->draw_x_start > 0
 		&& sprite->draw_x_start < SCREEN_WIDTH && sprite->y_relative
