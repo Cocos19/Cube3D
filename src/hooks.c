@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:30:51 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 18:44:14 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:56:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_key_release_hook(int key, t_display *display)
 	return (0);
 }
 
-int	ft_mouse_hook(int key, t_display *display)
+int	ft_mouse_hook(int key, int x, int y, t_display *display)
 {
 	if (key == 1)
 	{
@@ -91,5 +91,7 @@ int	ft_mouse_hook(int key, t_display *display)
 			display->mouse_enabled = 0;
 		}
 	}
+	(void)x;
+	(void)y;
 	return (0);
 }
