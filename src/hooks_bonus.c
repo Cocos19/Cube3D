@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:30:51 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 11:27:56 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:56:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_key_press_hook(int key, t_display *display)
 		display->map->player->is_strafing = STRAF_LEFT;
 	else if (key == STRAF_RIGHT)
 		display->map->player->is_strafing = STRAF_RIGHT;
+	else if (key == INTERACT)
+		open_or_close_door(display->map);
 	return (0);
 }
 

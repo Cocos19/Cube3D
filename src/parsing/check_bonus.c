@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:55:25 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 11:26:06 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:32:55 by mprofett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ int	tile_is_valid(t_display *display, char c, int i, int j)
 		map_error_and_exit(display, "Map not surrounded by walls");
 	if (c == '0' || c == '1' || c == ' ')
 		return (0);
+	else if (c == 'D')
+	{
+		add_to_door_lst(display, &i, &j);
+		return (0);
+	}
 	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
 	else if (c == 'P')
@@ -96,5 +101,6 @@ int	check_map_validity(t_display *display)
 				map_error_and_exit(display, "Invalid character on map");
 		}
 	}
+	display->map->sprites_array = get_sprites_array(display, sprites_lst);
 	return (0);
 }

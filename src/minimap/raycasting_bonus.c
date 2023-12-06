@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:48:24 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 11:39:24 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:46:40 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
-
-void	get_ray_side_distance(t_ray *ray, t_map *map)
-{
-	if (ray->direction.x < 0)
-	{
-		ray->step_x *= -1;
-		ray->side_distance.x = (map->player->position->x - ray->origin.x)
-			* ray->delta_distance.x;
-	}
-	else
-		ray->side_distance.x = (ray->origin.x + 1.0 - map->player->position->x)
-			* ray->delta_distance.x;
-	if (ray->direction.y < 0)
-	{
-		ray->step_y *= -1;
-		ray->side_distance.y = (map->player->position->y - ray->origin.y)
-			* ray->delta_distance.y;
-	}
-	else
-		ray->side_distance.y = (ray->origin.y + 1.0 - map->player->position->y)
-			* ray->delta_distance.y;
-}
 
 void	init_minimap_ray(t_ray *ray, t_map *map, t_dot *end_point)
 {
@@ -78,4 +56,26 @@ int	minimap_raycast(t_map *map, t_dot	*end_point)
 			&& get_door_status(map->door_lst, ray.origin.x, ray.origin.y)))
 			return (1);
 	}
+}
+
+void	get_ray_side_distance(t_ray *ray, t_map *map)
+{
+	if (ray->direction.x < 0)
+	{
+		ray->step_x *= -1;
+		ray->side_distance.x = (map->player->position->x - ray->origin.x)
+			* ray->delta_distance.x;
+	}
+	else
+		ray->side_distance.x = (ray->origin.x + 1.0 - map->player->position->x)
+			* ray->delta_distance.x;
+	if (ray->direction.y < 0)
+	{
+		ray->step_y *= -1;
+		ray->side_distance.y = (map->player->position->y - ray->origin.y)
+			* ray->delta_distance.y;
+	}
+	else
+		ray->side_distance.y = (ray->origin.y + 1.0 - map->player->position->y)
+			* ray->delta_distance.y;
 }
