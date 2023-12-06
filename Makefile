@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/12/05 15:58:50 by angassin         ###   ########.fr        #
+#    Updated: 2023/12/06 13:36:24 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,7 @@ SRC			= src/loop.c \
 			src/rendering/sprites_utils.c \
 
 
-SRC_BONUS	=
-
 OBJ			= ${SRC:.c=.o}
-
-OBJ_BONUS	= ${SRC_BONUS:.c=.o}
 
 LIBFT		= libft.a
 
@@ -78,17 +74,14 @@ ${MLX}:
 	${MAKE} -C ${MLX_PATH}
 	mv ${MLX_PATH}/${MLX} .
 
-bonus: ${OBJ_BONUS} ${LIBFT} ${MLX}
-	${CC} ${OBJ_BONUS} -o  ${NAME} ${LIBFT} ${MLX_FLAGS} ${MLX}
-
 clean:
 	${MAKE} clean -C ${LIBFT_PATH}
 	${MAKE} clean -C ${MLX_PATH}
-	${RM} ${OBJ} ${OBJ_BONUS}
+	${RM} ${OBJ}
 
 fclean: clean
 	${RM} ${NAME} ${LIBFT} ${MLX}
 
 re:	fclean all
 
-.PHONY:	all bonus clean fclean re
+.PHONY:	all clean fclean re
