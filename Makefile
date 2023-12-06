@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/12/05 15:58:50 by angassin         ###   ########.fr        #
+#    Updated: 2023/12/05 18:39:59 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ SRC			= src/loop.c \
 			src/memory_free_utils.c \
 			src/init_data_structures.c \
 			src/hooks.c \
-			src/commands/door_utils.c \
-			src/commands/door.c \
 			src/commands/move_player.c \
 			src/commands/move_forward.c \
 			src/commands/move_backward.c \
@@ -30,17 +28,19 @@ SRC			= src/loop.c \
 			src/parsing/info_parsing.c \
 			src/parsing/init_player_infos.c \
 			src/parsing/parse_map.c \
-			src/minimap/fov.c \
-			src/minimap/raycasting.c \
-			src/minimap/put_pixel.c \
 			src/rendering/render_screen.c \
 			src/rendering/rendering_utils.c \
 			src/rendering/screen_raycast_utils.c \
+			
+
+
+SRC_BONUS	= src/commands/door_utils.c \
+			src/commands/door.c \
+			src/minimap/fov.c \
+			src/minimap/raycasting.c \
+			src/minimap/put_pixel.c \
 			src/rendering/sprites.c \
 			src/rendering/sprites_utils.c \
-
-
-SRC_BONUS	=
 
 OBJ			= ${SRC:.c=.o}
 
