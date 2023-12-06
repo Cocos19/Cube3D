@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 20:38:59 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:40:45 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	render_background(t_img *image, t_display *display)
 		}
 	}
 }
+
 /*
 	Digital Differential Analysis algorithm used to increment the ray of
 	1 map's square at a time either in the abscissa's or in th ordinate's
@@ -90,6 +91,7 @@ static void	update_walls_perp_dist(t_map *map, t_ray *ray, int *x, int *side)
 		map->player->walls_perp_distance[*x]
 			= (ray->side_distance.y - ray->delta_distance.y);
 }
+
 /*
 	Initializes the ray's slope according to the player's
 	position and direction (indicated by step).
