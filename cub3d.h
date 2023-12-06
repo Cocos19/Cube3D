@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 16:04:28 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:47:19 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ double		get_player_direction_rad(t_vector *direction);
 void		init_display(t_display *display, char *map_name);
 void		init_map(t_display *display, char *map_name);
 
-/*LOOPS ANF HOOKS*/
+/*LOOPS AND HOOKS*/
 
 int			ft_mlx_hook(t_display *display);
 int			ft_loop_hook(t_display *display);
