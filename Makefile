@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/12/06 13:21:28 by angassin         ###   ########.fr        #
+#    Updated: 2023/12/06 16:43:39 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ SRC			= src/loop.c \
 			src/memory_free.c \
 			src/memory_free_utils.c \
 			src/init_data_structures.c \
-			src/commands/move_player.c \
 			src/commands/rotate.c \
 			src/parsing/info_parsing.c \
 			src/parsing/init_player_infos.c \
@@ -32,6 +31,7 @@ SRC_MAND	= src/hooks.c \
 			src/commands/move_backward.c \
 			src/commands/straf_left.c \
 			src/commands/straf_right.c \
+			src/commands/move_player.c \
 
 SRC_BONUS	= src/hooks_bonus.c \
 			src/parsing/check_bonus.c \
@@ -47,6 +47,7 @@ SRC_BONUS	= src/hooks_bonus.c \
 			src/commands/move_backward_bonus.c \
 			src/commands/straf_left_bonus.c \
 			src/commands/straf_right_bonus.c \
+			src/commands/move_player_bonus.c \
 
 OBJ			= ${SRC:.c=.o}
 

@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_player.c                                      :+:      :+:    :+:   */
+/*   move_player_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 12:31:28 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 16:42:38 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:42:44 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+
+static void	execute_mouse_moves(t_display *display);
 
 /*
 	All the move function will update the player position by multiplying the
@@ -32,4 +34,39 @@ void	move_player(t_display *display)
 		turn_right(display);
 	else if (display->map->player->is_turning == TURN_LEFT)
 		turn_left(display);
+	execute_mouse_moves(display);
+}
+
+/*
+	This function will check the player status.
+	If the moving or the strafing status where modified by the hooks,
+	this function will update the player informations.
+	Then, if the mouse mode is enabled, it will calculate the distance between
+	the center of the windows and mouse movements
+	in order to update player position too
+*/
+static void	execute_mouse_moves(t_display *display)
+{
+	int	x;
+	int	y;
+
+	x = -1;
+	y = -1;
+	mlx_mouse_get_pos(display->win, &x, &y);
+	if (x > 0 && x < SCREEN_WIDTH && y > 0 && y < SCREEN_HEIGHT
+		&& display->map->player->is_turning == -1
+		&& display->mouse_enabled == 1)
+	{
+		if (MOUSE_ORIGIN_X - x > 0)
+		{
+			turn_left(display);
+			display->mouse_x = x;
+		}
+		else if (MOUSE_ORIGIN_X - x < 0)
+		{
+			turn_right(display);
+			display->mouse_x = x;
+		}
+		mlx_mouse_move(display->win, MOUSE_ORIGIN_X, MOUSE_ORIGIN_Y);
+	}
 }
