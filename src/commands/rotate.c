@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:13:12 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:37:02 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:09:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-/*This functions perform a rotation of the direction and the plane vector
-on the players infos
-Since the raycast algorythm use the direction and the plane in order to cast
-the rays, the player view is update in the screen rendering*/
-
+/*
+	This functions performs a rotation of the direction and the plane vector
+	on the players infos.
+	Since the raycast algorithm uses the direction and the plane in order to cast
+	the rays, the player's view is updated in the screen rendering
+*/
 void	turn_right(t_display *display)
 {
 	double	old_dir;

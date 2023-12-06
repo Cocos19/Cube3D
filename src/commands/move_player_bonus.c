@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 12:31:28 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 16:42:44 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:54:41 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static void	execute_mouse_moves(t_display *display);
 
 /*
-	All the move function will update the player position by multiplying the
+	All the move functions will update the player's position by multiplying the
 	direction vector by the move speed
 	This function checks if by doing so, the player will enter a wall.
-	In this case, the movement on the problematic axis doesnt occur
+	In this case, the movement on the problematic axis doesnt occur.
 */
 void	move_player(t_display *display)
 {

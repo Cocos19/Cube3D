@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:37:54 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 19:03:52 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:38:59 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 static int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side);
 static int	get_texture_y_position(int *draw_start, int *line_height);
 
+/*
+	Sets a plane of focus (camera plane) thanks to which the ray's direction
+	is calculated. camera_x sets the right side of the screen's coordinate to 1,
+	the center to 0 and the left side to -1.
+	Caculates the ray's direction according to the player's movement direction,
+	it's orientation (which cardinal point it is facing) and the camera plane.
+	And determines the delta distance between the ray and the next map's square
+*/
 void	init_ray(t_ray *ray, t_map *map, int *x)
 {
 	double	camera_x;

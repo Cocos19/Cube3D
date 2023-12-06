@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 11:31:03 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 13:22:33 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:08:20 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	pixel_is_in_minimap_border(double x, double y)
 	the player position. Then it will check the tile where the pixel is.
 	Except for the field of view of the player,
 	there is no calculation to make to get the right color to put.
-	In case of a pixel in FOV, we will use a raycast algorythm from the player
+	In case of a pixel in FOV, we will use a raycast algorithm from the player
 	position to the pixel relative position and check if it is behind a wall or not
 */
 void	put_pixel_on_minimap(t_img *img, t_map *map, t_dot *pixel)
