@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 10:54:41 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:55:09 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void		init_map(t_display *display, char *map_name);
 
 /*LOOPS AND HOOKS*/
 
-int			ft_mlx_hook(t_display *display);
+int			ft_mlx_hook(void);
 int			ft_loop_hook(t_display *display);
 int			ft_key_hook(int key, t_display *display);
 int			ft_key_press_hook(int key, t_display *display);

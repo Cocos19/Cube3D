@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 11:11:12 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:55:15 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void	update_sprite_texture(t_display *display, int *loop_counter)
 	}
 }
 
-int	ft_mlx_hook(t_display *display)
+int	ft_mlx_hook(void)
 {
-	free_display(display);
 	exit (EXIT_SUCCESS);
 }
