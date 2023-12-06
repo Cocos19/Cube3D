@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_backward.c                                    :+:      :+:    :+:   */
+/*   move_backward_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:11:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:39:01 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:20:31 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 int	move_backward_x_is_allowed(t_map *map)
 {

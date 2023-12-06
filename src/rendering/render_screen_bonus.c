@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_screen.c                                    :+:      :+:    :+:   */
+/*   render_screen_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/04 19:06:45 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:23:02 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 static void	render_background(t_img *image, t_display *display);
 static void	cast_ray(t_display *display, t_ray *ray, int *side);

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   straf_left.c                                       :+:      :+:    :+:   */
+/*   straf_left_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:18:31 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:19:30 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:08 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 int	straf_left_x_is_allowed(t_map *map)
 {

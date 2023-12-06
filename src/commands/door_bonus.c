@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   door.c                                             :+:      :+:    :+:   */
+/*   door_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 14:08:10 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:45:49 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:20:12 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 void	get_door_ray_side_distance(t_ray *ray, t_map *map)
 {

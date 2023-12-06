@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites_utils.c                                    :+:      :+:    :+:   */
+/*   sprites_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:09:22 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:34:58 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:23:19 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 t_sprite	**get_sprites_array(t_display *display, t_sprite *sprites_lst)
 {

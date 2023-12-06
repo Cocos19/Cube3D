@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   straf_right.c                                      :+:      :+:    :+:   */
+/*   straf_right_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 12:18:18 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 12:19:41 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:16 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 int	straf_right_x_is_allowed(t_map *map)
 {

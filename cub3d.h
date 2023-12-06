@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:17:46 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 12:55:09 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:19:05 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@
 # define EMPTY_LINE 7
 # define MAP 8
 
-/*MINIMAP*/
-
-# define MINIMAP_CENTER_X 1795
-# define MINIMAP_CENTER_Y 125
-# define MINIMAP_DIAMETER 250
-# define MINIMAP_SCALE 20
-# define PLAYER_RADIUS 5
-
 /*MATH*/
 
 # define PI 3.14159265
@@ -68,8 +60,6 @@
 # define STRAF_RIGHT 2
 # define INTERACT 14
 # define RIGHT_CLICK 1
-# define DOOR_IS_OPEN 0
-# define DOOR_IS_CLOSED 1
 
 /*HOOKS MASKS*/
 
@@ -217,8 +207,6 @@ void		free_image(t_display *display, t_img *image);
 void		encode_pixel_rgb(int *pixel, uint8_t red, uint8_t green,
 				uint8_t blue);
 void		render_image(t_img *image, t_display *display);
-int			pixel_is_in_minimap(double x, double y);
-int			pixel_is_in_minimap_border(double x, double y);
 void		put_pixel_on_img(t_img *image, int x, int y, int color);
 void		put_empty_pix(t_img *img, t_map *map, t_dot *pixel, t_dot *map_pix);
 t_img		*init_texture_image(t_display *display, char *path);
@@ -265,17 +253,5 @@ void		turn_left(t_display *display);
 void		straf_left(t_display *display);
 void		straf_right(t_display *display);
 void		move_player(t_display *display);
-int			open_or_close_door(t_map *map);
-int			get_door_status(t_door *door_lst, int x, int y);
-int			tile_is_an_open_door(t_map *map, int *x, int *y);
-void		add_to_door_lst(t_display *display, int *x, int *y);
-void		change_door_status(t_map *map, int *x, int *y);
-
-/*Sprites*/
-
-t_sprite	**get_sprites_array(t_display *display, t_sprite *sprites_lst);
-void		sort_sprites_array(t_sprite **sprites_array, int first, int last);
-void		render_sprites(t_map *map, t_img *screen, t_img *texture);
-void		get_sprites_distance(t_map *map);
 
 #endif

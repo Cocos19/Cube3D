@@ -6,11 +6,12 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:48:24 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 12:46:40 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:39 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 void	init_minimap_ray(t_ray *ray, t_map *map, t_dot *end_point)
 {

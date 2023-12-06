@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 11:15:40 by mprofett          #+#    #+#              #
-#    Updated: 2023/12/06 12:42:28 by angassin         ###   ########.fr        #
+#    Updated: 2023/12/06 13:21:28 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ bonus: ${OBJ} ${OBJ_BONUS} ${LIBFT} ${MLX}
 clean:
 	${MAKE} clean -C ${LIBFT_PATH}
 	${MAKE} clean -C ${MLX_PATH}
-	${RM} ${OBJ} ${OBJ_BONUS}
+	${RM} ${OBJ} ${OBJ_MAND} ${OBJ_BONUS}
 
 fclean: clean
 	${RM} ${NAME} ${LIBFT} ${MLX}

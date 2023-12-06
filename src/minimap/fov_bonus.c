@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fov.c                                              :+:      :+:    :+:   */
+/*   fov_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mprofett <mprofett@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:13:26 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/02 11:36:19 by mprofett         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:26 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 int	radian_is_in_fov_range(double player_rad, double pix_rad)
 {

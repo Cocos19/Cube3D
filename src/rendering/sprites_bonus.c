@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                          :+:      :+:    :+:   */
+/*   sprites_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:45:45 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 09:00:12 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:23:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
+#include "../../cub3d_bonus.h"
 
 static void	rotate_sprite_face_camera(t_player *player, t_sprite *sprite);
 static void	get_sprite_drawing_infos(t_sprite *sprite);
