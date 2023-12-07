@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/07 11:11:10 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:45:58 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ static void	render_background(t_img *image, t_display *display);
 static void	cast_ray(t_display *display, t_ray *ray, int *side);
 static void	update_walls_perp_dist(t_map *map, t_ray *ray, int *x, int *side);
 
+/*
+	Renders the background and the textures in the screen_image
+	that will be displayed by mlx_put_image_to_window() using
+	ray-casting.
+*/
 void	render_image(t_img *image, t_display *display)
 {
 	t_ray	ray;
