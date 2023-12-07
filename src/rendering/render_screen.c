@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 20:40:45 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:11:10 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	render_background(t_img *image, t_display *display)
 	Digital Differential Analysis algorithm used to increment the ray of
 	1 map's square at a time either in the abscissa's or in th ordinate's
 	direction according to the ray's slope.
+	If a North or South wall is hit, side is set to 1, otherwise it is set to 0.
 */
 static void	cast_ray(t_display *display, t_ray *ray, int *side)
 {

@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:12:36 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/06 12:55:15 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:08:59 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ft_loop_hook(t_display *display)
 {
 	static int	loop_counter = 0;
 
-	move_player(display);
 	render_image(display->screen_img, display);
+	move_player(display);
 	mlx_clear_window(display->mlx, display->win);
 	mlx_put_image_to_window(display->mlx, display->win,
 		display->screen_img->mlx_img, 0, 0);
