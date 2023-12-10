@@ -6,14 +6,16 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 15:37:54 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/07 12:02:16 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/10 22:44:16 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3d.h"
 
-static int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side);
-static int	get_texture_y_position(int *draw_start, int *line_height);
+static int		get_texture_x_position(t_map *map, t_ray *ray, int *x,
+					int *side);
+static int		get_texture_y_position(int *draw_start, int *line_height);
+static t_img	*get_texture(t_map *map, t_ray *ray, int *side);
 
 /*
 	Sets a plane of focus (camera plane) thanks to which the ray's direction
@@ -48,30 +50,11 @@ void	init_ray(t_ray *ray, t_map *map, int *x)
 	get_ray_side_distance(ray, map);
 }
 
-t_img	*get_texture(t_map *map, t_ray *ray, int *side)
-{
-	if (ray->hit == 2)
-		return (map->door_texture);
-	if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 0)
-		return (map->south_texture);
-	else if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 1)
-		return (map->east_texture);
-	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 0)
-		return (map->north_texture);
-	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 1)
-		return (map->east_texture);
-	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 0)
-		return (map->north_texture);
-	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 1)
-		return (map->west_texture);
-	else if (ray->direction.x >= 0 && ray->direction.y < 0 && *side == 0)
-		return (map->south_texture);
-	else
-		return (map->west_texture);
-}
-
 /*
 	Draws the vertical line from bottom to top.
+	For each pixel of the line, it calculates the texture's coordinates
+	and extracts the color of the pixel from the texture.
+	Then it puts the pixel on the screen_image.
 */
 void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 {
@@ -102,6 +85,11 @@ void	draw_column(t_display *display, t_ray *ray, int *x, int *side)
 	}
 }
 
+/*
+	Returns the abscissa's coordinate of the texture that needs to be used.
+	wall_x stores the exact fraction of the wall that has been hit.
+	Then it is multiplied by the texture's width to get the exact coordinate.
+*/
 static int	get_texture_x_position(t_map *map, t_ray *ray, int *x, int *side)
 {
 	double	wall_x;
@@ -130,4 +118,26 @@ static int	get_texture_y_position(int *draw_start, int *line_height)
 	texture_distance
 		= *draw_start - SCREEN_HEIGHT / 2 + *line_height / 2;
 	return (texture_distance * step);
+}
+
+static t_img	*get_texture(t_map *map, t_ray *ray, int *side)
+{
+	if (ray->hit == 2)
+		return (map->door_texture);
+	if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 0)
+		return (map->south_texture);
+	else if (ray->direction.x >= 0 && ray->direction.y >= 0 && *side == 1)
+		return (map->east_texture);
+	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 0)
+		return (map->north_texture);
+	else if (ray->direction.x < 0 && ray->direction.y >= 0 && *side == 1)
+		return (map->east_texture);
+	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 0)
+		return (map->north_texture);
+	else if (ray->direction.x < 0 && ray->direction.y < 0 && *side == 1)
+		return (map->west_texture);
+	else if (ray->direction.x >= 0 && ray->direction.y < 0 && *side == 0)
+		return (map->south_texture);
+	else
+		return (map->west_texture);
 }

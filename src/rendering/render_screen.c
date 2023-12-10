@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/07 12:45:58 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/10 22:43:55 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	cast_ray(t_display *display, t_ray *ray, int *side);
 static void	update_walls_perp_dist(t_map *map, t_ray *ray, int *x, int *side);
 
 /*
-	Renders the background and the textures in the screen_image
-	that will be displayed by mlx_put_image_to_window() using
-	ray-casting.
+	Renders background and textures in the screen_image that will be displayed
+	by mlx_put_image_to_window()
+	Uses ray-casting to render the textures.
 */
 void	render_image(t_img *image, t_display *display)
 {
@@ -39,6 +39,9 @@ void	render_image(t_img *image, t_display *display)
 	}
 }
 
+/*
+	Renders the floor and the celling in the screen_image
+*/
 static void	render_background(t_img *image, t_display *display)
 {
 	int	x;
@@ -60,7 +63,7 @@ static void	render_background(t_img *image, t_display *display)
 
 /*
 	Digital Differential Analysis algorithm used to increment the ray of
-	1 map's square at a time either in the abscissa's or in th ordinate's
+	1 map's square at a time either in the abscissa's or in the ordinate's
 	direction according to the ray's slope.
 	If a North or South wall is hit, side is set to 1, otherwise it is set to 0.
 */

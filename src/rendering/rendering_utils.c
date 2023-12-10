@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:38:15 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/05 15:48:06 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/10 22:30:04 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ void	put_pixel_on_img(t_img *image, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
+/*
+	Extracts the color of a pixel from a texture by using the texture's	
+	coordinates.
+*/
 int	get_pixel_color(t_img *texture, t_dot_index *texture_position)
 {
 	int	texture_index;
