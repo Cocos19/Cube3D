@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:48:37 by mprofett          #+#    #+#             */
-/*   Updated: 2023/12/10 22:43:55 by angassin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:24:29 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	update_walls_perp_dist(t_map *map, t_ray *ray, int *x, int *side);
 /*
 	Renders background and textures in the screen_image that will be displayed
 	by mlx_put_image_to_window()
-	Uses ray-casting to render the textures.
+	Uses ray-casting to render the walls and textures.
 */
 void	render_image(t_img *image, t_display *display)
 {
